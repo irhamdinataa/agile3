@@ -24,7 +24,7 @@
     @stack('after-style')
 
     {{-- Favicon --}}
-    <link href="{{ asset('admin/img/logopcn.png') }}" rel="icon">
+    <link href="{{ asset('img/iconWeb.png') }}" rel="icon">
     <!-- Start GA -->
     <script async src="{{ url('https://www.googletagmanager.com/gtag/js?id=UA-94034622-3') }}"></script>
     <script>

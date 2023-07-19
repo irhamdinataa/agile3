@@ -12,7 +12,6 @@
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Surat Keluar</h2>
                 <div class="card">
                     <div class="card-header">
                         <h4>Tabel Surat Keluar</h4>
@@ -21,45 +20,48 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>Nomor Surat</th>
-                                        <th>Dari</th>
-                                        <th>Kepada</th>
-                                        <th>Perihal</th>
+                                        <th>Tujuan Surat</th>
+                                        <th>Klasifikasi</th>
                                         <th>Tanggal Surat</th>
+                                        <th>Tanggal Catat</th>
+                                        <th>Perihal</th>
                                         <th>Lampiran</th>
-                                        <th>Waktu Dibuat</th>
-                                        <th>Waktu Diperbarui</th>
+                                        <th>Pengelola</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($suratkeluars as $suratkeluar)
+                                    @foreach ($suratkeluar as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $suratkeluar['nomor_surat'] }}</td>
-                                            <td>{{ $suratkeluar['dari'] }}</td>
-                                            <td>{{ $suratkeluar['kepada'] }}</td>
-                                            <td>{{ $suratkeluar['tanggal_surat'] }}</td>
-                                            <td>{{ $suratkeluar['perihal'] }}</td>
+                                            <td>{{ $item['nomor_surat'] }}</td>
+                                            <td>{{ $item['tujuan_surat'] }}</td>
+                                            <td>{{ $item->klasifikasis->nama }}</td>
+                                            <td>{{ $item['tanggal_surat'] }}</td>
+                                            <td>{{ $item['tanggal_catat'] }}</td>
+                                            <td>{{ $item['perihal'] }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ Storage::url($suratkeluar->lampiran) }}" target="_blank"
+                                                    <a href="{{ Storage::url($item->lampiran) }}" target="_blank"
                                                         class="btn btn-primary"><i class="fas fa-eye"></i></a>
                                                 </div>
                                             </td>
-                                            <td class="text-center" style="white-space: nowrap;">
-                                                {{ $suratkeluar['created_at'] }}</td>
-                                            <td class="text-center" style="white-space: nowrap;">
-                                                {{ $suratkeluar['updated_at'] }}</td>
+                                            <td>{{ $item->users->name }}</td>
                                             <td class="text-center" style="white-space: nowrap;"><a
-                                                    href="{{ route('suratkeluar.edit', $suratkeluar->id) }}"
+                                                    href="{{ route('suratkeluar.edit', $item->id) }}"
                                                     class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('suratkeluar.destroy', $suratkeluar->id) }}}}"
+                                                <form action="{{ route('suratkeluar.destroy', $item->id) }}}}"
                                                     method="POST" class="d-inline">
                                                     @method('delete')
                                                     @csrf
@@ -100,7 +102,7 @@
             "scrollX": true,
             "columnDefs": [{
                 "sortable": false,
-                "targets": [6, 7, 8]
+                "targets": [7, 9]
             }]
         });
     </script>

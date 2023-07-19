@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">E-Arsip</a>
+            <a href="{{ url('/dashboard') }}">E-Arsip</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">E-Arsip</a>
+            <a class="text-small" href="{{ url('/dashboard') }}">E-Arsip</a>
         </div>
         <ul class="sidebar-menu">
             <li class="">

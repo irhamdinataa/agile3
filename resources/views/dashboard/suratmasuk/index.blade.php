@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Surat Masuk | AMS')
+@section('title', 'Surat Masuk | E-Arsip')
 @section('container')
     <div class="main-content">
         <section class="section">
@@ -12,22 +12,32 @@
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Surat Masuk Lokpro Media</h2>
                 <div class="card">
                     <div class="card-header">
                         <h4>Tabel Surat Masuk</h4>
+                        <div class="card-header-action">
+                            <a href="{{ route('suratmasuk.create') }}" class="btn btn-primary">Tambah Surat Masuk</a>
+                        </div>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>Nomor Surat</th>
+                                        <th>Asal Surat</th>
+                                        <th>Klasifikasi</th>
                                         <th>Tanggal Surat</th>
-                                        <th>Tanggal Surat Diterima</th>
+                                        <th>Tanggal Diterima</th>
                                         <th>Perihal</th>
                                         <th>Lampiran</th>
+                                        <th>Penerima</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -36,12 +46,20 @@
                                     @foreach ($suratMasuk as $item)
                                         <tr>
                                             <td class="text-center">{{ $no }}</td>
-                                            <td>{{ $item['nomor_surat'] }}</td>
+                                            <td>{{ $item->nomor_surat }}</td>
+                                            <td>{{ $item['asal_surat'] }}</td>
+                                            <td>{{ $item->klasifikasis->nama }}</td>
                                             <td>{{ $item['tanggal_surat'] }}</td>
                                             <td>{{ $item['tanggal_diterima'] }}</td>
                                             <td>{{ $item['perihal'] }}</td>
-                                            <td>{{ $item['lampiran'] }}</td>
-                                            <td class="text-center">
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    <a href="{{ Storage::url($item->lampiran) }}" target="_blank"
+                                                        class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                                </div>
+                                            </td>
+                                            <td>{{ $item->users->name }}</td>
+                                            <td class="text-center" style="white-space: nowrap;">
                                                 <a href="{{ route('suratmasuk.edit', $item->id) }}"
                                                     class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                                 <form action="{{ route('suratmasuk.destroy', $item->id) }}" method="POST"
@@ -80,5 +98,13 @@
     <script src="{{ asset('Admin/modules/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <!-- Page Specific JS File -->
-    <script src="{{ asset('Admin/js/page/modules-datatables.js') }}"></script>
+    <script>
+        $("#table-1").DataTable({
+            "scrollX": true,
+            "columnDefs": [{
+                "sortable": false,
+                "targets": [7, 9]
+            }]
+        });
+    </script>
 @endpush

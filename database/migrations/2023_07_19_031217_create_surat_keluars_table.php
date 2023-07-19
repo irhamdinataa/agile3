@@ -14,8 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nomor_surat')->unique();
             $table->string('tujuan_surat');
-            $table->string('isi');
-            $table->string('kode');
+            $table->unsignedBigInteger('klasifikasi_id');
             $table->date('tanggal_surat');
             $table->date('tanggal_catat');
             $table->string('perihal');
@@ -26,7 +25,13 @@ return new class extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('restrict')
-                ->onUpdate('restrict');
+                ->onUpdate('cascade');
+            $table
+                ->foreign('klasifikasi_id')
+                ->references('id')
+                ->on('klasifikasis')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

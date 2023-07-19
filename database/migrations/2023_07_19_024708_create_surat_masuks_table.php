@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,16 +14,24 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_surat')->unique();
             $table->string('asal_surat');
-            $table->text('isi');
-            $table->char('kode');
+            $table->unsignedBigInteger('klasifikasi_id');
             $table->date('tanggal_surat');
             $table->date('tanggal_diterima');
             $table->string('perihal');
             $table->string('lampiran');
             $table->unsignedBigInteger('users_id');
-            $table->foreign('users_id')
-                  ->references('id')->on('users')
-                  ->onDelete('restrict')->onUpdate('restrict');
+            $table
+                ->foreign('users_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
+            $table
+                ->foreign('klasifikasi_id')
+                ->references('id')
+                ->on('klasifikasis')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -14,10 +14,9 @@
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Tambah Surat Keluar Baru</h2>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Masukkan Data Surat Keluar</h4>
+                        <h4>Tambah Surat Keluar Baru</h4>
                     </div>
                     <div class="card-body">
                         <form class="needs-validation" method="POST" action="{{ route('suratkeluar.store') }}"
@@ -25,10 +24,10 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="nomorsurat">Nomor Surat</label>
-                                <input type="text" class="form-control @error('nomorsurat') is-invalid @enderror"
-                                    id="nomorsurat" name="nomorsurat" value="{{ old('nomorsurat') }}">
-                                @error('nomorsurat')
+                                <label for="nomor_surat">Nomor Surat</label>
+                                <input type="text" class="form-control @error('nomor_surat') is-invalid @enderror"
+                                    id="nomor_surat" name="nomor_surat" value="{{ old('nomor_surat') }}">
+                                @error('nomor_surat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -36,10 +35,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="dari">Dari</label>
-                                <input type="text" class="form-control @error('dari') is-invalid @enderror"
-                                    id="dari" name="dari" value="{{ old('dari') }}">
-                                @error('dari')
+                                <label for="tujuan_surat">Tujuan Surat</label>
+                                <input type="text" class="form-control @error('tujuan_surat') is-invalid @enderror"
+                                    id="tujuan_surat" name="tujuan_surat" value="{{ old('tujuan_surat') }}">
+                                @error('tujuan_surat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -47,21 +46,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="kepada">Kepada</label>
-                                <input type="text" class="form-control @error('kepada') is-invalid @enderror"
-                                    id="kepada" name="kepada" value="{{ old('kepada') }}">
-                                @error('kepada')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="perihal">Perihal</label>
-                                <input type="text" class="form-control @error('perihal') is-invalid @enderror"
-                                    id="perihal" name="perihal" value="{{ old('perihal') }}">
-                                @error('perihal')
+                                <label for="klasifikasi_id">Klasifikasi</label>
+                                <select name="klasifikasi_id" id="klasifikasi_id"
+                                    class="form-control @error('klasifikasi_id') is-invalid @enderror">
+                                    <option hidden selected disabled value>Pilih Klasifikasi</option>
+                                    @foreach ($klasifikasis as $klasifikasi => $id)
+                                        <option value="{{ $id }}" @selected(old('klasifikasi_id') == $id)>
+                                            {{ $klasifikasi }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('klasifikasi_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -80,11 +75,33 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="tanggal_catat">Tanggal Catat</label>
+                                <input type="date" class="form-control @error('tanggal_catat') is-invalid @enderror"
+                                    id="tanggal_catat" name="tanggal_catat" value="{{ old('tanggal_catat') }}">
+                                @error('tanggal_catat')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="perihal">Perihal</label>
+                                <input type="text" class="form-control @error('perihal') is-invalid @enderror"
+                                    id="perihal" name="perihal" value="{{ old('perihal') }}">
+                                @error('perihal')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
+                            <div class="form-group">
                                 <label for="lampiran">Lampiran</label>
-                                <input type="file"
-                                    class="form-control @error('lampiran') is-invalid @enderror"
-                                    id="lampiran" name="lampiran"
-                                    value="{{ old('lampiran') }}" required
+                                <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
+                                    id="lampiran" name="lampiran" value="{{ old('lampiran') }}" required
                                     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf">
                                 @error('lampiran')
                                     <div class="invalid-feedback">
@@ -92,9 +109,10 @@
                                     </div>
                                 @enderror
                             </div>
+                            <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
 
                             <div class="card-footer text-right">
-                                <a href="{{ route('notadinas.index') }}" class="btn btn-danger mr-2">Kembali</a>
+                                <a href="{{ route('suratkeluar.index') }}" class="btn btn-danger mr-2">Kembali</a>
                                 <button class="btn btn-primary" type="submit">Tambah Data</button>
                             </div>
                         </form>

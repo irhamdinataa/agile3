@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Klasifikasi;
 use Illuminate\Http\Request;
+use App\Services\KlasifikasiServices;
+use App\Http\Requests\KlasifikasiRequest;
+
 
 class KlasifikasiController extends Controller
 {
@@ -12,7 +15,8 @@ class KlasifikasiController extends Controller
      */
     public function index()
     {
-        //
+        $klasifikasi = Klasifikasi::all();
+        return view('dashboard.klasifikasi.index', compact('klasifikasi'));
     }
 
     /**
@@ -20,15 +24,19 @@ class KlasifikasiController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.klasifikasi.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(KlasifikasiRequest $request, KlasifikasiServices $klasifikasiServices)
     {
-        //
+        $klasifikasiServices->handleStore($request);
+
+        return redirect()
+            ->route('klasifikasi.index')
+            ->withSuccess('klasifikasi berhasil ditambahkan');
     }
 
     /**
@@ -44,22 +52,32 @@ class KlasifikasiController extends Controller
      */
     public function edit(Klasifikasi $klasifikasi)
     {
-        //
+        return view('dashboard.klasifikasi.edit', [
+            'klasifikasi' => $klasifikasi,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Klasifikasi $klasifikasi)
+    public function update(KlasifikasiRequest $request, Klasifikasi $klasifikasi, KlasifikasiServices $klasifikasiServices)
     {
-        //
+        $klasifikasiServices->handleUpdate($request, $klasifikasi);
+
+        return redirect()
+            ->route('klasifikasi.index')
+            ->withSuccess('klasifikasi berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Klasifikasi $klasifikasi)
+    public function destroy(Klasifikasi $klasifikasi, KlasifikasiServices $klasifikasiServices)
     {
-        //
+        $klasifikasiServices->handleDestroy($klasifikasi);
+
+        return redirect()
+            ->route('klasifikasi.index')
+            ->withSuccess('klasifikasi berhasil dihapus');
     }
 }

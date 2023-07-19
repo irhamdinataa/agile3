@@ -26,7 +26,7 @@ class SuratMasukController extends Controller
      */
     public function create()
     {
-        $klasifikasis = Klasifikasi::query()->pluck('id', 'nama');
+        $klasifikasis = Klasifikasi::query()->pluck('id', 'kode');
         return view('dashboard.suratmasuk.create', [
             'klasifikasis' => $klasifikasis,
         ]);
@@ -57,7 +57,7 @@ class SuratMasukController extends Controller
      */
     public function edit(SuratMasuk $suratmasuk)
     {
-        $klasifikasis = Klasifikasi::query()->pluck('id', 'nama');
+        $klasifikasis = Klasifikasi::query()->pluck('id', 'kode');
         return view('dashboard.suratmasuk.edit', [
             'suratmasuk' => $suratmasuk,
             'klasifikasis' => $klasifikasis,

@@ -20,7 +20,26 @@
                 <a href="{{ route('suratkeluar.index') }}" class="nav-link"><i class="fas fa-envelope-open-text"></i>
                     <span>Surat Keluar</span></a>
             </li>
+            <li>
 
+                <a href="{{ route('klasifikasi.index') }}" class="nav-link"><i class="fas fa-code-branch"></i>
+                    <span>Klasifikasi</span></a>
+            </li>
+            <li>
+
+                <a href="#" class="nav-link"><i class="fas fa-check-circle"></i>
+                    <span>Verifikasi</span></a>
+            </li>
+            <li>
+
+                <a href="#" class="nav-link"><i class="fas fa-user"></i>
+                    <span>Manajemen User</span></a>
+            </li>
+            <li>
+
+                <a href="#" class="nav-link"><i class="fas fa-history"></i>
+                    <span>Riwayat</span></a>
+            </li>
         </ul>
     </aside>
 </div>

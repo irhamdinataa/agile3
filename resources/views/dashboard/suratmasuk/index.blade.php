@@ -84,6 +84,12 @@
     </div>
 @endsection
 @push('after-style')
+    <style>
+        #table-1 {
+            min-width: 100%;
+            /* Atur lebar minimum tabel */
+        }
+    </style>
     <link rel="stylesheet" href="{{ asset('Admin/modules/datatables/datatables.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('Admin/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
@@ -100,7 +106,6 @@
     <!-- Page Specific JS File -->
     <script>
         $("#table-1").DataTable({
-            "scrollX": true,
             "columnDefs": [{
                 "sortable": false,
                 "targets": [7, 9]

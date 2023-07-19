@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Bidang | AMS')
+@section('title', 'Klasifikasi | AMS')
 @section('container')
     <div class="main-content">
         <section class="section">
@@ -7,43 +7,43 @@
                 <h1>Kode Klasifikasi</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item active"><a href="{{ route('classifications.index') }}">Kode Klasifikasi</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('klasifikasi.index') }}">Kode Klasifikasi</a></div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Kode Klasifikasi</h2>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Tabel Kode Klasifikasi</h4>
+                        <h4>Tabel Klasifikasi</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('classifications.create') }}" class="btn btn-primary">Tambah Kode Klasifikasi</a>
+                            <a href="{{ route('klasifikasi.create') }}" class="btn btn-primary">Tambah Kode Klasifikasi</a>
                         </div>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr class="text-center">
                                         <th>No</th>
-                                        <th>Nama Kode Bidang</th>
-                                        <th>Nama Kode Sub Bidang</th>
-                                        <th>Waktu Dibuat</th>
-                                        <th>Waktu Diperbarui</th>
+                                        <th>Kode</th>
+                                        <th>Uraian</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($klasifikasis  as $klasifikasi)
+                                    @foreach ($klasifikasi as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $klasifikasi['kode_bidang'] }}</td>
-                                            <td>{{ $klasifikasi['kode_sub_bidang'] }}</td>
-                                            <td class="text-center">{{ $klasifikasi['created_at'] }}</td>
-                                            <td class="text-center">{{ $klasifikasi['updated_at'] }}</td>
-                                            <td class="text-center"><a href="{{ route('classifications.edit',  $klasifikasi) }}"
+                                            <td>{{ $item['kode'] }}</td>
+                                            <td>{{ $item['uraian'] }}</td>
+                                            <td class="text-center"><a href="{{ route('klasifikasi.edit', $item->id) }}"
                                                     class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('classifications.destroy',  $klasifikasi->slug) }}" method="POST"
+                                                <form action="{{ route('klasifikasi.destroy', $item->id) }}" method="POST"
                                                     class="d-inline">
                                                     @method('DELETE')
                                                     @csrf
@@ -65,6 +65,12 @@
 @endsection
 
 @push('after-style')
+    <style>
+        #table-1 {
+            min-width: 100%;
+            /* Atur lebar minimum tabel */
+        }
+    </style>
     <link rel="stylesheet" href="{{ asset('Admin/modules/datatables/datatables.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('Admin/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
@@ -79,5 +85,12 @@
     <script src="{{ asset('Admin/modules/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <!-- Page Specific JS File -->
-    <script src="{{ asset('Admin/js/page/modules-datatables.js') }}"></script>
+    <script>
+        $("#table-1").DataTable({
+            "columnDefs": [{
+                "sortable": false,
+                "targets": [7, 9]
+            }]
+        });
+    </script>
 @endpush

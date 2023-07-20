@@ -75,6 +75,11 @@
                                         </div>
                                     </div>
                                     <p class="text-danger">{{ $errors->first('password') }}</p>
+                                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <a href="{{ url('forgotpassword') }}" class="text-center">Forgot Password ?</a>
+                        </div>
+                    </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block"
                                             tabindex="4">Login</button>

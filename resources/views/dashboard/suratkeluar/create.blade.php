@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Tambah Surat Keluar | FMS')
+@section('title', 'Tambah Surat Keluar | E-Arsip')
 @section('container')
     <div class="main-content">
         <section class="section">
@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 <label for="lampiran">Lampiran</label>
                                 <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
-                                    id="lampiran" name="lampiran" value="{{ old('lampiran') }}" required
+                                    id="lampiran" name="lampiran" value="{{ old('lampiran') }}"
                                     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf">
                                 @error('lampiran')
                                     <div class="invalid-feedback">

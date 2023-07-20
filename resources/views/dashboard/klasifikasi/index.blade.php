@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Klasifikasi | AMS')
+@section('title', 'Klasifikasi | E-Arsip')
 @section('container')
     <div class="main-content">
         <section class="section">
@@ -36,6 +36,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $no = 1; @endphp
                                     @foreach ($klasifikasi as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
@@ -53,6 +54,7 @@
                                                 </form>
                                             </td>
                                         </tr>
+                                        @php $no++; @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -89,7 +91,7 @@
         $("#table-1").DataTable({
             "columnDefs": [{
                 "sortable": false,
-                "targets": [7, 9]
+                "targets": [3]
             }]
         });
     </script>

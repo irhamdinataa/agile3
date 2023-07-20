@@ -27,11 +27,6 @@
             </li>
             <li>
 
-                <a href="#" class="nav-link"><i class="fas fa-check-circle"></i>
-                    <span>Verifikasi</span></a>
-            </li>
-            <li>
-
                 <a href="#" class="nav-link"><i class="fas fa-user"></i>
                     <span>Manajemen User</span></a>
             </li>
@@ -40,6 +35,37 @@
                 <a href="#" class="nav-link"><i class="fas fa-history"></i>
                     <span>Riwayat</span></a>
             </li>
+            <li class="dropdown">
+                <a id="btn-dropdown-report" href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-check-circle"></i>
+                    <span>Verifikasi</span></a>
+
+                <ul
+                    class="dropdown-menu dropdown-menu-side {{ Str::contains(Request::path(), 'verifikasi') ? 'show' : '' }}">
+                    <li><a class="nav-link " href="#">User</a></li>
+                    <li><a class="nav-link " href="#">Surat Masuk</a></li>
+                    <li><a class="nav-link " href="#">Surat Keluar</a></li>
+                </ul>
+            </li>
         </ul>
     </aside>
 </div>
+@push('after-script')
+    <script>
+        $(document).ready(function() {
+            $('#btn-dropdown').on('click', function(e) {
+                e.preventDefault();
+                let dropdownMenu = $('.dropdown-menu-side');
+                if (!dropdownMenu.hasClass('show')) {
+                    dropdownMenu.slideDown(500, function() {
+                        dropdownMenu.addClass('show');
+                    });
+                } else {
+                    dropdownMenu.slideUp(500, function() {
+                        dropdownMenu.removeClass('show');
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

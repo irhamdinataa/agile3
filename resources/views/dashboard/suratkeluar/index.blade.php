@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Surat Keluar | AMS')
+@section('title', 'Surat Keluar | E-Arsip')
 @section('container')
     <div class="main-content">
         <section class="section">

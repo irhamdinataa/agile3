@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->date('tanggal_diterima');
             $table->string('perihal');
             $table->string('lampiran');
+            $table->boolean('verifikasi');
             $table->unsignedBigInteger('users_id');
             $table
                 ->foreign('users_id')

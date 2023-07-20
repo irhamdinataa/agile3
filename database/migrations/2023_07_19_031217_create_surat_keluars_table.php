@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->string('perihal');
             $table->unsignedBigInteger('users_id');
             $table->string('lampiran');
+            $table->boolean('verifikasi');
+
             $table
                 ->foreign('users_id')
                 ->references('id')

@@ -51,7 +51,7 @@ class SuratMasukController extends Controller
 
         return redirect()
             ->route('dokumen.create')
-            ->withSuccess('surat masuk berhasil ditambahkan');
+            ->withSuccess('dokumen berhasil ditambahkan');
     }
 
     /**

@@ -44,7 +44,7 @@
                                 @enderror
                             </div>
                             <div class="card-footer text-right">
-                                <a href="{{ route('klasifikasi.index') }}" class="btn btn-danger mr-2">Kembali</a>
+                                <a id="backbutton" href="#" class="btn btn-danger mr-2">Kembali</a>
                                 <button class="btn btn-primary" type="submit">Ubah Data</button>
                             </div>
                         </form>
@@ -53,3 +53,14 @@
         </section>
     </div>
 @endsection
+@push('after-script')
+    <script>
+        document.getElementById("backbutton").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            setTimeout(function() {
+                window.history.back();
+            }, 500);
+        });
+    </script>
+@endpush

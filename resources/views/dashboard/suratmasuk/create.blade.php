@@ -38,7 +38,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="tanggal_surat">Tanggal Surat</label>
+                                <label for="tanggal_surat">Tanggal Dokumen</label>
                                 <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror"
                                     id="tanggal_surat" name="tanggal_surat" value="{{ old('tanggal_surat') }}">
                                 @error('tanggal_surat')
@@ -81,7 +81,7 @@
                             <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
 
                             <div class="card-footer text-right">
-                                <a href="{{ route('repository.index') }}" class="btn btn-danger mr-2">Kembali</a>
+                                <a id="backbutton" href="#" class="btn btn-danger mr-2">Kembali</a>
                                 <button class="btn btn-primary" type="submit">Tambah Data</button>
                             </div>
                         </form>
@@ -90,3 +90,14 @@
         </section>
     </div>
 @endsection
+@push('after-script')
+    <script>
+        document.getElementById("backbutton").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            setTimeout(function() {
+                window.history.back();
+            }, 500);
+        });
+    </script>
+@endpush

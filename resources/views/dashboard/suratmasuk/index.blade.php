@@ -89,18 +89,18 @@
             /* Atur lebar minimum tabel */
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('Admin/modules/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/modules/datatables/datatables.min.css') }}">
     <link rel="stylesheet"
-        href="{{ asset('Admin/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('Admin/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+        href="{{ asset('admin/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 @endpush
 
 @push('after-script')
     <!-- JS Libraies -->
-    <script src="{{ asset('Admin/modules/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('Admin/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('Admin/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
-    <script src="{{ asset('Admin/modules/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('admin/modules/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('admin/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('admin/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('admin/modules/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <!-- Page Specific JS File -->
     <script>

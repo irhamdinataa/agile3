@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport" />
-    <title>Login | E-Arsip</title>
+    <title>Register | E-Arsip</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/modules/bootstrap/css/bootstrap.min.css') }}" />
@@ -42,17 +42,34 @@
                         <br><br><br><br>
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h4>Login</h4>
+                                <h4>Register</h4>
                             </div>
 
                             <div class="card-body">
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {!! session('success') !!}
+                                    </div>
+                                @endif
                                 @if (session('error'))
                                     <div class="alert alert-danger">
                                         {!! session('error') !!}
                                     </div>
                                 @endif
-                                <form method="post" action="{{ route('postlogin') }}">
+                                <form action="{{ url('register') }}" method="post">
                                     {{ csrf_field() }}
+
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                            name="name" placeholder="Nama Lengkap" value="{{ old('name') }}">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('name') }}</p>
                                     <div class="input-group mb-3">
                                         <input type="email"
                                             class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
@@ -75,20 +92,16 @@
                                         </div>
                                     </div>
                                     <p class="text-danger">{{ $errors->first('password') }}</p>
-                                    <div class="row">
-                                        <div class="col-12 mb-2">
-                                            <a href="{{url('forgotpassword')}}" class="text-center">Forgot Password ?</a>
-                                        </div>
-                                    </div>
+
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block"
-                                            tabindex="4">Login</button>
+                                            tabindex="4">Register</button>
                                     </div>
                                 </form>
                                 <div class="text-center mt-4 mb-3">
                                     <div class="text-job text-muted">
-                                        <a href="{{ url('/register') }}" class="text-small"
-                                            style="text-decoration: none;">Buat Akun
+                                        <a href="{{ url('/login') }}" class="text-small"
+                                            style="text-decoration: none;">Login
                                         </a>
                                     </div>
                                 </div>

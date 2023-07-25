@@ -10,29 +10,39 @@ class SuratMasukServices {
 
         $data = $request->validated();
         $data['lampiran'] = $request->lampiran->store('lampiran_surat_masuk', 'public');
+        $data['verifikasi'] = false;
 
         SuratMasuk::create($data);
 
         return true;
     }
 
-    public function handleUpdate($request, $suratkeluar) {
+    public function handleUpdate($request, $suratmasuk) {
         $data = $request->validated();
 
         if($request->hasFile('lampiran')){
-            Storage::delete('public/'.$suratkeluar->lampiran);
+            Storage::delete('public/'.$suratmasuk->lampiran);
             $data['lampiran'] = $request->lampiran->store('lampiran_surat_masuk', 'public');
         }
 
-        $suratkeluar->update($data);
+        $suratmasuk->update($data);
 
         return true;
     }
 
-    public function handleDestroy($suratkeluar) {
+    public function handleVerifikasi($request, $suratmasuk) {
+        $data = $request->validated();
+        $data['verifikasi'] = true;
 
-        Storage::delete('public/'.$suratkeluar->lampiran);
-        $suratkeluar->delete();
+        $suratmasuk->update($data);
+
+        return true;
+    }
+
+    public function handleDestroy($suratmasuk) {
+
+        Storage::delete('public/'.$suratmasuk->lampiran);
+        $suratmasuk->delete();
 
         return true;
     }

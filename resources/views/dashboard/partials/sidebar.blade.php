@@ -7,46 +7,45 @@
             <a class="text-small" href="{{ url('/dashboard') }}">E-Arsip</a>
         </div>
         <ul class="sidebar-menu">
-            <li class="">
-                <a href="{{ route('dashboard') }}" class=""><i class="fas fa-fire"></i><span>Dashboard</span></a>
-            </li>
-            <li>
+            @if (hasPermissionMenu(['admin']))
+                <li class="{{ hasRoutePrefix('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" class=""><i
+                            class="fas fa-fire"></i><span>Dashboard</span></a>
+                </li>
+            @endif
+            <li class="{{ hasRoutePrefix('dokumen') ? 'active' : '' }}">
 
-                <a href="{{ route('suratmasuk.index') }}" class="nav-link"><i class="fas fa-envelope"></i>
-                    <span>Surat Masuk</span></a>
+                <a href="{{ route('dokumen.create') }}" class="nav-link"><i class="fas fa-file-alt"></i>
+                    <span>Input Dokumen</span></a>
             </li>
-            <li>
+            <li class="{{ hasRoutePrefix('repository') ? 'active' : '' }}">
 
-                <a href="{{ route('suratkeluar.index') }}" class="nav-link"><i class="fas fa-envelope-open-text"></i>
-                    <span>Surat Keluar</span></a>
+                <a href="{{ route('repository.index') }}" class="nav-link"><i class="fas fa-folder-open"></i>
+                    <span>Repository</span></a>
             </li>
-            <li>
+            @if (hasPermissionMenu(['admin']))
+                <li class="{{ hasRoutePrefix('klasifikasi') ? 'active' : '' }}">
 
-                <a href="{{ route('klasifikasi.index') }}" class="nav-link"><i class="fas fa-code-branch"></i>
-                    <span>Klasifikasi</span></a>
-            </li>
-            <li>
+                    <a href="{{ route('klasifikasi.index') }}" class="nav-link"><i class="fas fa-code-branch"></i>
+                        <span>Klasifikasi</span></a>
+                </li>
+                <li class="{{ hasRoutePrefix('users') ? 'active' : '' }}">
 
-                <a href="#" class="nav-link"><i class="fas fa-user"></i>
-                    <span>Manajemen User</span></a>
-            </li>
-            <li>
+                    <a href="{{ route('users.index') }}" class="nav-link"><i class="fas fa-user"></i>
+                        <span>Manajemen User</span></a>
+                </li>
+                <li class="dropdown">
+                    <a id="btn-dropdown-report" href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                            class="fas fa-check-circle"></i>
+                        <span>Verifikasi</span></a>
 
-                <a href="#" class="nav-link"><i class="fas fa-history"></i>
-                    <span>Riwayat</span></a>
-            </li>
-            <li class="dropdown">
-                <a id="btn-dropdown-report" href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                        class="fas fa-check-circle"></i>
-                    <span>Verifikasi</span></a>
-
-                <ul
-                    class="dropdown-menu dropdown-menu-side {{ Str::contains(Request::path(), 'verifikasi') ? 'show' : '' }}">
-                    <li><a class="nav-link " href="#">User</a></li>
-                    <li><a class="nav-link " href="#">Surat Masuk</a></li>
-                    <li><a class="nav-link " href="#">Surat Keluar</a></li>
-                </ul>
-            </li>
+                    <ul
+                        class="dropdown-menu dropdown-menu-side {{ Str::contains(Request::path(), 'verifikasi') ? 'show' : '' }}">
+                        <li class="{{ hasRoutePrefix('verifikasi_user') ? 'active' : '' }}"><a class="nav-link " href="{{ route('verifikasiuser.index') }}">User</a></li>
+                        <li class="{{ hasRoutePrefix('verifikasi_dokumen') ? 'active' : '' }}"><a class="nav-link " href="{{ route('verifikasidokumen.index') }}">Dokumen</a></li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </aside>
 </div>

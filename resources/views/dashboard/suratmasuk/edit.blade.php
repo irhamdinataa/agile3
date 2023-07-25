@@ -4,12 +4,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Surat Masuk</h1>
+                <h1>Repository</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('suratmasuk.index') }}">Surat Masuk</a></div>
-                    <div class="breadcrumb-item active"><a href="{{ route('suratmasuk.create') }}">Edit Surat
-                            Masuk</a>
+                    <div class="breadcrumb-item active"><a href="{{ route('repository.index') }}">Repository</a>
                     </div>
                 </div>
             </div>
@@ -17,36 +15,13 @@
             <div class="section-body">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Edit Surat Masuk</h4>
+                        <h4>Edit Repository</h4>
                     </div>
                     <div class="card-body">
                         <form class="needs-validation" method="POST"
-                            action="{{ route('suratmasuk.update', $suratmasuk->id) }}">
+                            action="{{ route('repository.update', $suratmasuk->id) }}">
                             @csrf
                             @method('PATCH')
-                            <div class="form-group">
-                                <label for="nomor_surat">No Surat</label>
-                                <input type="text" class="form-control @error('nomor_surat') is-invalid @enderror"
-                                    id="nomor_surat" name="nomor_surat"
-                                    value="{{ old('nomor_surat', $suratmasuk->nomor_surat) }}">
-                                @error('nomor_surat')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="asal_surat">Asal Surat</label>
-                                <input type="text" class="form-control @error('asal_surat') is-invalid @enderror"
-                                    id="asal_surat" name="asal_surat"
-                                    value="{{ old('asal_surat', $suratmasuk->asal_surat) }}">
-                                @error('asal_surat')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
                             <div class="form-group">
                                 <label for="klasifikasi_id">Klasifikasi</label>
                                 <select name="klasifikasi_id" id="klasifikasi_id"
@@ -111,7 +86,7 @@
                             </div>
 
                             <div class="card-footer text-right">
-                                <a href="{{ route('suratmasuk.index') }}" class="btn btn-danger mr-2">Kembali</a>
+                                <a href="{{ route('repository.index') }}" class="btn btn-danger mr-2">Kembali</a>
                                 <button class="btn btn-primary" type="submit">Edit Data</button>
                             </div>
                         </form>

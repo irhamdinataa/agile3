@@ -7,14 +7,12 @@
                 <h1>Bidang</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('klasifikasi.index') }}">Kode Klasifikasi</a></div>
                     <div class="breadcrumb-item active"><a href="{{ route('klasifikasi.create') }}">Tambah Kode
                             Klasifikasi</a></div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Tambah Kode Klasifikasi Baru</h2>
                 <div class="card">
                     <div class="card-header">
                         <h4>Masukkan Data Kode Klasifikasi</h4>

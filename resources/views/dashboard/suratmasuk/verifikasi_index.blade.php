@@ -1,20 +1,20 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Repository | E-Arsip')
+@section('title', 'Verifikasi Repository | E-Arsip')
 @section('container')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Repository</h1>
+                <h1>Verifikasi Repository</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item active"><a href="{{ route('repository.index') }}">Repository</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('repository.index') }}">Verifikasi Repository</a></div>
                 </div>
             </div>
 
             <div class="section-body">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Tabel Repository</h4>
+                        <h4>Tabel Verifikasi Repository</h4>
                     </div>
                     <div class="card-body">
                         @if (session('success'))
@@ -34,9 +34,7 @@
                                         <th>Lampiran</th>
                                         <th>Penerima</th>
                                         <th>Tanggal Input</th>
-                                        @if (hasPermissionMenu(['admin']))
-                                            <th>Aksi</th>
-                                        @endif
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,7 +42,7 @@
                                     @foreach ($suratMasuk as $item)
                                         <tr>
                                             <td class="text-center">{{ $no }}</td>
-                                            <td>{{ $item->klasifikasis->kode }}</td>
+                                            <td>{{ $item->klasifikasis->nama }}</td>
                                             <td>{{ $item['tanggal_surat'] }}</td>
                                             <td>{{ $item['tanggal_diterima'] }}</td>
                                             <td>{{ $item['perihal'] }}</td>
@@ -56,20 +54,24 @@
                                             </td>
                                             <td>{{ $item->users->name }}</td>
                                             <td>{{ $item['created_at'] }}</td>
-                                            @if (hasPermissionMenu(['admin']))
-                                                <td class="text-center" style="white-space: nowrap;">
-                                                    <a href="{{ route('repository.edit', $item->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('repository.destroy', $item->id) }}"
-                                                        method="POST" class="d-inline">
-                                                        @method('delete')
-                                                        @csrf
-                                                        <button type="submit"
-                                                            onclick="return confirm('Anda yakin ingin menghapus data ini ?')"
-                                                            class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                                    </form>
-                                                </td>
-                                            @endif
+                                            <td class="text-center" style="white-space: nowrap;">
+                                                <form action="{{ route('verifikasidokumen.update', $item->id) }}"
+                                                    method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fas fa-check-circle"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('repository.destroy', $item->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit"
+                                                        onclick="return confirm('Anda yakin ingin menghapus data ini ?')"
+                                                        class="btn btn-danger"><i class="fas fa-window-close"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         @php $no++; @endphp
                                     @endforeach
@@ -104,24 +106,11 @@
 
     <!-- Page Specific JS File -->
     <script>
-        <?php
-        $role = auth()->user()->role;
-        ?>
-        var role = "<?php echo $role; ?>";
-        if (role == 'admin') {
-            $("#table-1").DataTable({
-                "columnDefs": [{
-                    "sortable": false,
-                    "targets": [5, 8]
-                }]
-            });
-        } else {
-            $("#table-1").DataTable({
-                "columnDefs": [{
-                    "sortable": false,
-                    "targets": [5]
-                }]
-            });
-        }
+        $("#table-1").DataTable({
+            "columnDefs": [{
+                "sortable": false,
+                "targets": [5, 8]
+            }]
+        });
     </script>
 @endpush

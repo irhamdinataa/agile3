@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Services\UserServices;
+use App\Http\Requests\UserRequest;
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $users = User::query()
+            ->where('role', 'user')
+            ->where('verifikasi', true)
+            ->get();
+        return view('dashboard.users.index', [
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(UserRequest $request, UserServices $user)
+    {
+        try {
+            $user->handleStore($request);
+            return redirect()
+                ->route('register')
+                ->withSuccess('berhasil membuat akun, akan di informasikan di email apabila sudah di terima oleh admin');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with(['error' => 'email already used'])
+                ->withInput($request->all);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user)
+    {
+        return view('dashboard.users.edit', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UserRequest $request, User $user, UserServices $userServices)
+    {
+        $userServices->handleUpdate($request, $user);
+        return redirect()
+            ->route('users.edit', auth()->user()->id)
+            ->withSuccess('profile berhasil diubah');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $user, UserServices $userServices)
+    {
+        $userServices->handleDestroy($user);
+        return redirect()->route('users.index');
+    }
+
+    public function verifikasi_index()
+    {
+        $users = User::query()
+            ->where('role', 'user')
+            ->where('verifikasi', false)
+            ->get();
+        return view('dashboard.users.verifikasi_index', compact('users'));
+    }
+
+    public function verifikasi_update(UserRequest $request, User $user, UserServices $userServices)
+    {
+        $userServices->handleVerifikasi($request, $user);
+        return redirect()
+            ->route('verifikasiuser.index')
+            ->withSuccess('user berhasil diverifikasi');
+    }
+}

@@ -16,7 +16,8 @@ class SuratMasukController extends Controller
     public function index()
     {
         $suratMasuk = SuratMasuk::query()
-            ->with('users','klasifikasis')
+            ->with('users', 'klasifikasis')
+            ->where('verifikasi', true)
             ->get();
         return view('dashboard.suratmasuk.index', compact('suratMasuk'));
     }
@@ -32,6 +33,15 @@ class SuratMasukController extends Controller
         ]);
     }
 
+    public function verifikasi_index()
+    {
+        $suratMasuk = SuratMasuk::query()
+            ->with('users', 'klasifikasis')
+            ->where('verifikasi', false)
+            ->get();
+        return view('dashboard.suratmasuk.verifikasi_index', compact('suratMasuk'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -40,7 +50,7 @@ class SuratMasukController extends Controller
         $suratmasukServices->handleStore($request);
 
         return redirect()
-            ->route('suratmasuk.index')
+            ->route('dokumen.create')
             ->withSuccess('surat masuk berhasil ditambahkan');
     }
 
@@ -72,8 +82,16 @@ class SuratMasukController extends Controller
         $suratmasukServices->handleUpdate($request, $suratmasuk);
 
         return redirect()
-            ->route('suratmasuk.index')
-            ->withSuccess('surat masuk berhasil diubah');
+            ->route('repository.index')
+            ->withSuccess('dokumen berhasil diubah');
+    }
+
+    public function verifikasi_update(SuratMasukRequest $request, SuratMasuk $suratmasuk, SuratMasukServices $suratmasukServices)
+    {
+        $suratmasukServices->handleVerifikasi($request, $suratmasuk);
+        return redirect()
+            ->route('verifikasidokumen.index')
+            ->withSuccess('dokumen berhasil diverifikasi');
     }
 
     /**
@@ -84,7 +102,7 @@ class SuratMasukController extends Controller
         $suratmasukServices->handleDestroy($suratmasuk);
 
         return redirect()
-            ->route('suratmasuk.index')
-            ->withSuccess('surat masuk berhasil dihapus');
+            ->route('repository.index')
+            ->withSuccess('dokumen berhasil dihapus');
     }
 }

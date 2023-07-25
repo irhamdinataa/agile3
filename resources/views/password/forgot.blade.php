@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport" />
-    <title>Login | E-Arsip</title>
+    <title>Forgot Password | E-Arsip</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/modules/bootstrap/css/bootstrap.min.css') }}" />
@@ -42,16 +42,21 @@
                         <br><br><br><br>
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h4>Login</h4>
+                                <h4>Forgot Password</h4>
                             </div>
 
                             <div class="card-body">
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {!! session('success') !!}
+                                    </div>
+                                @endif
                                 @if (session('error'))
                                     <div class="alert alert-danger">
                                         {!! session('error') !!}
                                     </div>
                                 @endif
-                                <form method="post" action="{{ route('postlogin') }}">
+                                <form action="{{ url('forgotpassword') }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="input-group mb-3">
                                         <input type="email"
@@ -64,31 +69,15 @@
                                         </div>
                                     </div>
                                     <p class="text-danger">{{ $errors->first('email') }}</p>
-                                    <div class="input-group mb-3">
-                                        <input type="password"
-                                            class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                            name="password" placeholder="Password" value="{{ old('password') }}">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="fas fa-lock"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="text-danger">{{ $errors->first('password') }}</p>
-                                    <div class="row">
-                                        <div class="col-12 mb-2">
-                                            <a href="{{url('forgotpassword')}}" class="text-center">Forgot Password ?</a>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block"
-                                            tabindex="4">Login</button>
+                                            tabindex="4">Request New Password</button>
                                     </div>
                                 </form>
                                 <div class="text-center mt-4 mb-3">
                                     <div class="text-job text-muted">
-                                        <a href="{{ url('/register') }}" class="text-small"
-                                            style="text-decoration: none;">Buat Akun
+                                        <a href="{{ url('/login') }}" class="text-small"
+                                            style="text-decoration: none;">Login
                                         </a>
                                     </div>
                                 </div>

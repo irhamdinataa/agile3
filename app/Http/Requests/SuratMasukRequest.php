@@ -23,8 +23,6 @@ class SuratMasukRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nomor_surat' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
-            'asal_surat' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'klasifikasi_id' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'tanggal_surat' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'tanggal_diterima' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],

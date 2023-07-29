@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Klasifikasi;
-use App\Models\SuratMasuk;
+use App\Models\Dokumen;
 use App\Models\User;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $dokumen = SuratMasuk::query()
+        $dokumen = Dokumen::query()
             ->where('verifikasi', true)
             ->count();
 

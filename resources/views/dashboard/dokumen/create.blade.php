@@ -38,10 +38,10 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="tanggal_surat">Tanggal Dokumen</label>
-                                <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror"
-                                    id="tanggal_surat" name="tanggal_surat" value="{{ old('tanggal_surat') }}">
-                                @error('tanggal_surat')
+                                <label for="tanggal_dokumen">Tanggal Dokumen</label>
+                                <input type="date" class="form-control @error('tanggal_dokumen') is-invalid @enderror"
+                                    id="tanggal_dokumen" name="tanggal_dokumen" value="{{ old('tanggal_dokumen') }}">
+                                @error('tanggal_dokumen')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

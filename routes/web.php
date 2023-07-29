@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SuratMasukController;
-use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KlasifikasiController;
 use App\Http\Controllers\UserController;
@@ -51,21 +50,12 @@ Route::group(
 
         Route::prefix('dokumen')
             ->name('dokumen.')
-            ->controller(SuratMasukController::class)
+            ->controller(DokumenController::class)
             ->group(function () {
                 Route::get('/create', 'create')->name('create');
                 Route::post('/', 'store')->name('store');
             });
-
-        Route::prefix('register')
-            ->name('register.')
-            ->controller(UserController::class)
-            ->group(function () {
-                Route::post('/', 'store')->name('store');
-                Route::get('/{user}/edit', 'edit')->name('edit');
-                Route::patch('/{user}', 'update')->name('update');
-            });
-
+            
         Route::prefix('profile')
             ->name('profile.')
             ->controller(UserController::class)
@@ -76,12 +66,12 @@ Route::group(
 
         Route::prefix('repository')
             ->name('repository.')
-            ->controller(SuratMasukController::class)
+            ->controller(DokumenController::class)
             ->group(function () {
                 Route::get('/', 'index')->name('index');
-                Route::get('/{suratmasuk}/edit', 'edit')->name('edit');
-                Route::patch('/{suratmasuk}', 'update')->name('update');
-                Route::delete('/{suratmasuk}', 'destroy')->name('destroy');
+                Route::get('/{dokumen}/edit', 'edit')->name('edit');
+                Route::patch('/{dokumen}', 'update')->name('update');
+                Route::delete('/{dokumen}', 'destroy')->name('destroy');
             });
 
         Route::group(
@@ -134,11 +124,11 @@ Route::group(
 
                 Route::prefix('verifikasi_dokumen')
                     ->name('verifikasidokumen.')
-                    ->controller(SuratMasukController::class)
+                    ->controller(DokumenController::class)
                     ->group(function () {
                         Route::get('/', 'verifikasi_index')->name('index');
-                        Route::patch('/{suratmasuk}', 'verifikasi_update')->name('update');
-                        Route::delete('/{suratmasuk}', 'destroy')->name('destroy');
+                        Route::patch('/{dokumen}', 'verifikasi_update')->name('update');
+                        Route::delete('/{dokumen}', 'destroy')->name('destroy');
                     });
             },
         );

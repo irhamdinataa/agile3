@@ -14,7 +14,7 @@
                 <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right" style="margin-top:21px;">
-                <a href="{{route('users.edit', auth()->user()->id)}}" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile </a>
+                <a href="{{route('profile.edit', auth()->user()->id)}}" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile </a>
                 <div class="dropdown-divider"></div>
 
                 <a href="{{route('user.password.edit')}}" class="dropdown-item has-icon"> <i class="fas fa-key"></i> Change Password </a>

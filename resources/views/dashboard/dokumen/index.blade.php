@@ -41,11 +41,11 @@
                                 </thead>
                                 <tbody>
                                     @php $no = 1; @endphp
-                                    @foreach ($suratMasuk as $item)
+                                    @foreach ($dokumen as $item)
                                         <tr>
                                             <td class="text-center">{{ $no }}</td>
                                             <td>{{ $item->klasifikasis->kode }}</td>
-                                            <td>{{ $item['tanggal_surat'] }}</td>
+                                            <td>{{ $item['tanggal_dokumen'] }}</td>
                                             <td>{{ $item['tanggal_diterima'] }}</td>
                                             <td>{{ $item['perihal'] }}</td>
                                             <td>

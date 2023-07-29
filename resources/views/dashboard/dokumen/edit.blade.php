@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Edit Surat Masuk | AMS')
+@section('title', 'Edit Dokumen | AMS')
 @section('container')
     <div class="main-content">
         <section class="section">
@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <form class="needs-validation" method="POST"
-                            action="{{ route('repository.update', $suratmasuk->id) }}">
+                            action="{{ route('repository.update', $dokumen->id) }}">
                             @csrf
                             @method('PATCH')
                             <div class="form-group">
@@ -28,7 +28,7 @@
                                     class="form-control @error('klasifikasi_id') is-invalid @enderror">
                                     <option hidden selected disabled value>Pilih Klasifikasi</option>
                                     @foreach ($klasifikasis as $klasifikasi => $id)
-                                        <option value="{{ $id }}" @selected(old('klasifikasi_id', $suratmasuk->klasifikasis->id) == $id)>
+                                        <option value="{{ $id }}" @selected(old('klasifikasi_id', $dokumen->klasifikasis->id) == $id)>
                                             {{ $klasifikasi }}
                                         </option>
                                     @endforeach
@@ -42,11 +42,11 @@
 
                             
                             <div class="form-group">
-                                <label for="tanggal_surat">Tanggal Surat</label>
-                                <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror"
-                                    id="tanggal_surat" name="tanggal_surat"
-                                    value="{{ old('tanggal_surat', $suratmasuk->tanggal_surat) }}">
-                                @error('tanggal_surat')
+                                <label for="tanggal_dokumen">Tanggal Dokumen</label>
+                                <input type="date" class="form-control @error('tanggal_dokumen') is-invalid @enderror"
+                                    id="tanggal_dokumen" name="tanggal_dokumen"
+                                    value="{{ old('tanggal_dokumen', $dokumen->tanggal_dokumen) }}">
+                                @error('tanggal_dokumen')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -56,7 +56,7 @@
                                 <label for="tanggal_diterima">Tanggal Diterima</label>
                                 <input type="date" class="form-control @error('tanggal_diterima') is-invalid @enderror"
                                     id="tanggal_diterima" name="tanggal_diterima"
-                                    value="{{ old('tanggal_diterima', $suratmasuk->tanggal_diterima) }}">
+                                    value="{{ old('tanggal_diterima', $dokumen->tanggal_diterima) }}">
                                 @error('tanggal_diterima')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <label for="perihal">Perihal</label>
                                 <input type="text" class="form-control @error('perihal') is-invalid @enderror"
-                                    id="perihal" name="perihal" value="{{ old('perihal', $suratmasuk->perihal) }}">
+                                    id="perihal" name="perihal" value="{{ old('perihal', $dokumen->perihal) }}">
                                 @error('perihal')
                                     <div class="invalid-feedback">
                                         {{ $message }}

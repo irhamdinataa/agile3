@@ -7,14 +7,14 @@
     - "sesuaikan konfigurasi database"
     - pada bagian bawah ini sesuaikan dengan **app password** google akun anda, kalau belum ada buat dulu disini > https://myaccount.google.com/apppasswords
 
-    MAIL_MAILER=smtp
-    MAIL_HOST=smtp.gmail.com
-    MAIL_PORT=587
-    MAIL_USERNAME=youremail
-    MAIL_PASSWORD=yourapppassword
-    MAIL_ENCRYPTION=tls
-    MAIL_FROM_ADDRESS=youremail
-    MAIL_FROM_NAME="${APP_NAME}"
+    MAIL_MAILER=smtp<br>
+    MAIL_HOST=smtp.gmail.com<br>
+    MAIL_PORT=587<br>
+    MAIL_USERNAME=youremail<br>
+    MAIL_PASSWORD=yourapppassword<br>
+    MAIL_ENCRYPTION=tls<br>
+    MAIL_FROM_ADDRESS=youremail<br>
+    MAIL_FROM_NAME="${APP_NAME}"<br>
 
 4. generate application key dengan `php artisan key:generate`
 5. running database dengan `php artisan migrate:fresh --seed`

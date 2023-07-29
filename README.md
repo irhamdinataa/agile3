@@ -1,4 +1,9 @@
 # E-Arsip App
+
+## requirement
+1. 8.1 php version 
+2. mysql
+
 ## Installation
 
 1. Clone repository ini
@@ -19,3 +24,7 @@
 4. generate application key dengan `php artisan key:generate`
 5. running database dengan `php artisan migrate:fresh --seed`
 6. pastikan database server dan web server berjalan, kemudian start aplikasi dengan `php artisan serve`
+
+## default admin account
+email : usertest@gmail.com
+password : usertest

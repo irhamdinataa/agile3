@@ -46,18 +46,8 @@ Route::group(
         ],
     ],
     function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::prefix('suratkeluar')
-            ->name('suratkeluar.')
-            ->controller(SuratKeluarController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::get('/{suratkeluar}/edit', 'edit')->name('edit');
-                Route::patch('/{suratkeluar}', 'update')->name('update');
-                Route::delete('/{suratkeluar}', 'destroy')->name('destroy');
-            });
+        Route::get('password', [PasswordController::class, 'edit'])->name('user.password.edit');
+        Route::patch('password', [PasswordController::class, 'update'])->name('user.password.update');
 
         Route::prefix('dokumen')
             ->name('dokumen.')
@@ -65,6 +55,23 @@ Route::group(
             ->group(function () {
                 Route::get('/create', 'create')->name('create');
                 Route::post('/', 'store')->name('store');
+            });
+
+        Route::prefix('register')
+            ->name('register.')
+            ->controller(UserController::class)
+            ->group(function () {
+                Route::post('/', 'store')->name('store');
+                Route::get('/{user}/edit', 'edit')->name('edit');
+                Route::patch('/{user}', 'update')->name('update');
+            });
+
+        Route::prefix('profile')
+            ->name('profile.')
+            ->controller(UserController::class)
+            ->group(function () {
+                Route::get('/{user}/edit', 'edit')->name('edit');
+                Route::patch('/{user}', 'update')->name('update');
             });
 
         Route::prefix('repository')
@@ -77,73 +84,63 @@ Route::group(
                 Route::delete('/{suratmasuk}', 'destroy')->name('destroy');
             });
 
-        Route::prefix('klasifikasi')
-            ->name('klasifikasi.')
-            ->controller(KlasifikasiController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::get('/{klasifikasi}/edit', 'edit')->name('edit');
-                Route::patch('/{klasifikasi}', 'update')->name('update');
-                Route::delete('/{klasifikasi}', 'destroy')->name('destroy');
-            });
+        Route::group(
+            [
+                'middleware' => [
+                    function ($request, $next) {
+                        if (auth()->user()->role == 'admin') {
+                            return $next($request);
+                        }
+                        auth()->logout();
+                        return redirect()
+                            ->route('login')
+                            ->with('error', 'anda perlu login sebagai admin');
+                    },
+                ],
+            ],
+            function () {
+                Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::prefix('disposisi')
-            ->name('disposisi.')
-            ->controller(DisposisiController::class)
-            ->group(function () {
-                Route::get('disposisi/{suratmasuk}', 'index')->name('index');
-                Route::get('disposisi/{suratmasuk}/create', 'create')->name('create');
-                Route::post('disposisi/{suratmasuk}', 'store')->name('store');
-                Route::get('disposisi/{suratmasuk}/{id}', 'edit')->name('edit');
-                Route::patch('disposisi/{suratmasuk}/{id}', 'update')->name('update');
-                Route::delete('disposisi/{suratmasuk}/{id}', 'destroy')->name('destroy');
-                Route::get('disposisi/{suratmasuk}/{id}/download', 'download')->name('download');
-            });
+                Route::prefix('klasifikasi')
+                    ->name('klasifikasi.')
+                    ->controller(KlasifikasiController::class)
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+                        Route::get('/create', 'create')->name('create');
+                        Route::post('/', 'store')->name('store');
+                        Route::get('/{klasifikasi}/edit', 'edit')->name('edit');
+                        Route::patch('/{klasifikasi}', 'update')->name('update');
+                        Route::delete('/{klasifikasi}', 'destroy')->name('destroy');
+                    });
 
-        Route::prefix('users')
-            ->name('users.')
-            ->controller(UserController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::get('/{user}/edit', 'edit')->name('edit');
-                Route::patch('/{user}', 'update')->name('update');
-                Route::delete('/{user}', 'destroy')->name('destroy');
-            });
+                Route::prefix('users')
+                    ->name('users.')
+                    ->controller(UserController::class)
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+                        Route::get('/{user}/edit', 'edit')->name('edit');
+                        Route::patch('/{user}', 'update')->name('update');
+                        Route::delete('/{user}', 'destroy')->name('destroy');
+                    });
 
-        Route::prefix('users')
-            ->name('users.')
-            ->controller(UserController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::post('/', 'store')->name('store');
-                Route::get('/{user}/edit', 'edit')->name('edit');
-                Route::patch('/{user}', 'update')->name('update');
-                Route::delete('/{user}', 'destroy')->name('destroy');
-            });
+                Route::prefix('verifikasi_user')
+                    ->name('verifikasiuser.')
+                    ->controller(UserController::class)
+                    ->group(function () {
+                        Route::get('/', 'verifikasi_index')->name('index');
+                        Route::patch('/{user}', 'verifikasi_update')->name('update');
+                        Route::delete('/{user}', 'destroy')->name('destroy');
+                    });
 
-        Route::prefix('verifikasi_user')
-            ->name('verifikasiuser.')
-            ->controller(UserController::class)
-            ->group(function () {
-                Route::get('/', 'verifikasi_index')->name('index');
-                Route::patch('/{user}', 'verifikasi_update')->name('update');
-                Route::delete('/{user}', 'destroy')->name('destroy');
-            });
-
-        Route::prefix('verifikasi_dokumen')
-            ->name('verifikasidokumen.')
-            ->controller(SuratMasukController::class)
-            ->group(function () {
-                Route::get('/', 'verifikasi_index')->name('index');
-                Route::patch('/{suratmasuk}', 'verifikasi_update')->name('update');
-                Route::delete('/{suratmasuk}', 'destroy')->name('destroy');
-            });
-
-        Route::get('password', [PasswordController::class, 'edit'])->name('user.password.edit');
-        Route::patch('password', [PasswordController::class, 'update'])->name('user.password.update');
+                Route::prefix('verifikasi_dokumen')
+                    ->name('verifikasidokumen.')
+                    ->controller(SuratMasukController::class)
+                    ->group(function () {
+                        Route::get('/', 'verifikasi_index')->name('index');
+                        Route::patch('/{suratmasuk}', 'verifikasi_update')->name('update');
+                        Route::delete('/{suratmasuk}', 'destroy')->name('destroy');
+                    });
+            },
+        );
     },
 );

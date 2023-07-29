@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('surat_masuks', function (Blueprint $table) {
+        Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('klasifikasi_id');
-            $table->date('tanggal_surat');
+            $table->date('tanggal_dokumen');
             $table->date('tanggal_diterima');
             $table->string('perihal');
             $table->string('lampiran');

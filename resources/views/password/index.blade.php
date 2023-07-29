@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="card-footer text-right">
-                                <a href="{{ route('dashboard') }}" class="btn btn-danger mr-2">Kembali</a>
+                                <a id="backbutton" href="#" class="btn btn-danger mr-2">Kembali</a>
                                 <button class="btn btn-primary" type="submit">Update</button>
                             </div>
                         </form>
@@ -85,6 +85,15 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('Admin/js/page/forms-advanced-forms.js') }}"></script>
+    <script>
+        document.getElementById("backbutton").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            setTimeout(function() {
+                window.history.back();
+            }, 500);
+        });
+    </script>
     <script>
         function previewImage(event, previewId) {
             let reader = new FileReader();

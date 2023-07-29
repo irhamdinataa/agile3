@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Klasifikasi;
 use App\Models\User;
 
-class SuratMasuk extends Model
+class Dokumen extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];

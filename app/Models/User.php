@@ -18,6 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $guarded = ['id'];
+    public $incrementing = false;
+    protected $primaryKey = 'id';
     // protected $fillable = ['name', 'email', 'password', 'foto_profile', 'role', 'verifikasi'];
 
     /**

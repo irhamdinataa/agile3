@@ -32,6 +32,15 @@ class UserRequest extends FormRequest
         return $rules;
     }
 
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'nama diperlukan.',
+            'email.required' => 'email diperlukan.',
+            'password.required' => 'password diperlukan.',
+        ];
+    }
+
     public function prepareForValidation()
     {
         if ($this->isMethod('PATCH')) {

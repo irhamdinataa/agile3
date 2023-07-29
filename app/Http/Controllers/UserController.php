@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\UserServices;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -72,10 +73,17 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user, UserServices $userServices)
     {
+        // dd(hasRoutePrefix('users'));
         $userServices->handleUpdate($request, $user);
-        return redirect()
-            ->route('users.edit', auth()->user()->id)
-            ->withSuccess('profile berhasil diubah');
+        if (Str::startsWith(url()->current(), route('users.edit', auth()->user()->id))) {
+            return redirect()
+                ->route('users.edit', auth()->user()->id)
+                ->withSuccess('user berhasil diubah');
+        } else {
+            return redirect()
+                ->route('profile.edit', auth()->user()->id)
+                ->withSuccess('profile berhasil diubah');
+        }
     }
 
     /**

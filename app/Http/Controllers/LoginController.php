@@ -11,10 +11,16 @@ class LoginController extends Controller
 {
     public function postlogin(Request $request)
     {
-        request()->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
+        request()->validate(
+            [
+                'email' => 'required',
+                'password' => 'required',
+            ],
+            [
+                'email.required' => 'email diperlukan',
+                'password.required' => 'password diperlukan',
+            ],
+        );
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
@@ -58,9 +64,15 @@ class LoginController extends Controller
     }
     public function forgotpassword_post(Request $request)
     {
-        $this->validate($request, [
-            'email' => 'required',
-        ]);
+        $this->validate(
+            $request,
+            [
+                'email' => 'required',
+            ],
+            [
+                'email.required' => 'email diperlukan',
+            ],
+        );
         if (
             \DB::table('users')
                 ->where('email', $request->email)

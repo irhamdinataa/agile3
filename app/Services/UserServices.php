@@ -11,6 +11,7 @@ class UserServices
     public function handleStore($request)
     {
         $data = $request->validated();
+        $data['id'] = \Uuid::generate(4);
         $data['password'] = bcrypt($data['password']);
         $data['role'] = 'user';
         $data['verifikasi'] = false;

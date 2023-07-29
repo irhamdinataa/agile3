@@ -19,118 +19,119 @@ use App\Http\Controllers\PasswordController;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/login');
-});
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/register', [LoginController::class, 'register'])->name('register');
-Route::post('/register', [UserController::class, 'store']);
-Route::get('/forgotpassword', [LoginController::class, 'forgotpassword']);
-Route::post('/forgotpassword', [LoginController::class, 'forgotpassword_post']);
-
-Route::group(
-    [
-        'middleware' => [
-            function ($request, $next) {
-                if (auth()->user()->verifikasi == true) {
-                    return $next($request);
-                }
-                auth()->logout();
-                return redirect()
-                    ->route('login')
-                    ->with('error', 'Akun belum diverifikasi admin, akan diberitahukan di email anda');
-            },
-        ],
-    ],
-    function () {
-        Route::get('password', [PasswordController::class, 'edit'])->name('user.password.edit');
-        Route::patch('password', [PasswordController::class, 'update'])->name('user.password.update');
-
-        Route::prefix('dokumen')
-            ->name('dokumen.')
-            ->controller(DokumenController::class)
-            ->group(function () {
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-            });
-            
-        Route::prefix('profile')
-            ->name('profile.')
-            ->controller(UserController::class)
-            ->group(function () {
-                Route::get('/{user}/edit', 'edit')->name('edit');
-                Route::patch('/{user}', 'update')->name('update');
-            });
-
-        Route::prefix('repository')
-            ->name('repository.')
-            ->controller(DokumenController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/{dokumen}/edit', 'edit')->name('edit');
-                Route::patch('/{dokumen}', 'update')->name('update');
-                Route::delete('/{dokumen}', 'destroy')->name('destroy');
-            });
-
-        Route::group(
-            [
-                'middleware' => [
-                    function ($request, $next) {
-                        if (auth()->user()->role == 'admin') {
-                            return $next($request);
-                        }
-                        auth()->logout();
-                        return redirect()
-                            ->route('login')
-                            ->with('error', 'anda perlu login sebagai admin');
-                    },
-                ],
+Route::group(['middleware' => 'prevent-back-history'], function () {
+    Route::get('/', function () {
+        return redirect('/login');
+    });
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/register', [LoginController::class, 'register'])->name('register');
+    Route::post('/register', [UserController::class, 'store']);
+    Route::get('/forgotpassword', [LoginController::class, 'forgotpassword']);
+    Route::post('/forgotpassword', [LoginController::class, 'forgotpassword_post']);
+    Route::group(
+        [
+            'middleware' => [
+                function ($request, $next) {
+                    if (auth()->user()->verifikasi == true) {
+                        return $next($request);
+                    }
+                    auth()->logout();
+                    return redirect()
+                        ->route('login')
+                        ->with('error', 'Akun belum diverifikasi admin, akan diberitahukan di email anda');
+                },
             ],
-            function () {
-                Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        ],
+        function () {
+            Route::get('password', [PasswordController::class, 'edit'])->name('user.password.edit');
+            Route::patch('password', [PasswordController::class, 'update'])->name('user.password.update');
 
-                Route::prefix('klasifikasi')
-                    ->name('klasifikasi.')
-                    ->controller(KlasifikasiController::class)
-                    ->group(function () {
-                        Route::get('/', 'index')->name('index');
-                        Route::get('/create', 'create')->name('create');
-                        Route::post('/', 'store')->name('store');
-                        Route::get('/{klasifikasi}/edit', 'edit')->name('edit');
-                        Route::patch('/{klasifikasi}', 'update')->name('update');
-                        Route::delete('/{klasifikasi}', 'destroy')->name('destroy');
-                    });
+            Route::prefix('dokumen')
+                ->name('dokumen.')
+                ->controller(DokumenController::class)
+                ->group(function () {
+                    Route::get('/create', 'create')->name('create');
+                    Route::post('/', 'store')->name('store');
+                });
 
-                Route::prefix('users')
-                    ->name('users.')
-                    ->controller(UserController::class)
-                    ->group(function () {
-                        Route::get('/', 'index')->name('index');
-                        Route::get('/{user}/edit', 'edit')->name('edit');
-                        Route::patch('/{user}', 'update')->name('update');
-                        Route::delete('/{user}', 'destroy')->name('destroy');
-                    });
+            Route::prefix('profile')
+                ->name('profile.')
+                ->controller(UserController::class)
+                ->group(function () {
+                    Route::get('/{user}/edit', 'edit')->name('edit');
+                    Route::patch('/{user}', 'update')->name('update');
+                });
 
-                Route::prefix('verifikasi_user')
-                    ->name('verifikasiuser.')
-                    ->controller(UserController::class)
-                    ->group(function () {
-                        Route::get('/', 'verifikasi_index')->name('index');
-                        Route::patch('/{user}', 'verifikasi_update')->name('update');
-                        Route::delete('/{user}', 'destroy')->name('destroy');
-                    });
+            Route::prefix('repository')
+                ->name('repository.')
+                ->controller(DokumenController::class)
+                ->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/{dokumen}/edit', 'edit')->name('edit');
+                    Route::patch('/{dokumen}', 'update')->name('update');
+                    Route::delete('/{dokumen}', 'destroy')->name('destroy');
+                });
 
-                Route::prefix('verifikasi_dokumen')
-                    ->name('verifikasidokumen.')
-                    ->controller(DokumenController::class)
-                    ->group(function () {
-                        Route::get('/', 'verifikasi_index')->name('index');
-                        Route::patch('/{dokumen}', 'verifikasi_update')->name('update');
-                        Route::delete('/{dokumen}', 'destroy')->name('destroy');
-                    });
-            },
-        );
-    },
-);
+            Route::group(
+                [
+                    'middleware' => [
+                        function ($request, $next) {
+                            if (auth()->user()->role == 'admin') {
+                                return $next($request);
+                            }
+                            auth()->logout();
+                            return redirect()
+                                ->route('login')
+                                ->with('error', 'anda perlu login sebagai admin');
+                        },
+                    ],
+                ],
+                function () {
+                    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+                    Route::prefix('klasifikasi')
+                        ->name('klasifikasi.')
+                        ->controller(KlasifikasiController::class)
+                        ->group(function () {
+                            Route::get('/', 'index')->name('index');
+                            Route::get('/create', 'create')->name('create');
+                            Route::post('/', 'store')->name('store');
+                            Route::get('/{klasifikasi}/edit', 'edit')->name('edit');
+                            Route::patch('/{klasifikasi}', 'update')->name('update');
+                            Route::delete('/{klasifikasi}', 'destroy')->name('destroy');
+                        });
+
+                    Route::prefix('users')
+                        ->name('users.')
+                        ->controller(UserController::class)
+                        ->group(function () {
+                            Route::get('/', 'index')->name('index');
+                            Route::get('/{user}/edit', 'edit')->name('edit');
+                            Route::patch('/{user}', 'update')->name('update');
+                            Route::delete('/{user}', 'destroy')->name('destroy');
+                        });
+
+                    Route::prefix('verifikasi_user')
+                        ->name('verifikasiuser.')
+                        ->controller(UserController::class)
+                        ->group(function () {
+                            Route::get('/', 'verifikasi_index')->name('index');
+                            Route::patch('/{user}', 'verifikasi_update')->name('update');
+                            Route::delete('/{user}', 'destroy')->name('destroy');
+                        });
+
+                    Route::prefix('verifikasi_dokumen')
+                        ->name('verifikasidokumen.')
+                        ->controller(DokumenController::class)
+                        ->group(function () {
+                            Route::get('/', 'verifikasi_index')->name('index');
+                            Route::patch('/{dokumen}', 'verifikasi_update')->name('update');
+                            Route::delete('/{dokumen}', 'destroy')->name('destroy');
+                        });
+                },
+            );
+        },
+    );
+});

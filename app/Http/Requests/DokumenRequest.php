@@ -32,6 +32,17 @@ class DokumenRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'klasifikasi_id.required' => 'klasifikasi diperlukan.',
+            'tanggal_dokumen.required' => 'tanggal dokumen diperlukan.',
+            'tanggal_diterima.required' => 'tanggal diterima diperlukan.',
+            'perihal.required' => 'perihal diperlukan.',
+            'lampiran.required' => 'lampiran diperlukan.',
+        ];
+    }
+
     public function prepareForValidation()
     {
         if ($this->isMethod('patch')) {

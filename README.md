@@ -23,7 +23,8 @@
 
 4. generate application key dengan `php artisan key:generate`
 5. running database dengan `php artisan migrate:fresh --seed`
-6. pastikan database server dan web server berjalan, kemudian start aplikasi dengan `php artisan serve`
+6. untuk akses file lampiran yang ada di storage `php artisan storage:link`
+7. pastikan database server dan web server berjalan, kemudian start aplikasi dengan `php artisan serve`
 
 ## default admin account
 email : usertest@gmail.com

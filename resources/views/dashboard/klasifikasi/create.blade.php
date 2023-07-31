@@ -18,6 +18,11 @@
                         <h4>Masukkan Data Kode Klasifikasi</h4>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <form class="needs-validation" method="POST" action="{{ route('klasifikasi.store') }}">
                             @csrf
                             <div class="form-group">

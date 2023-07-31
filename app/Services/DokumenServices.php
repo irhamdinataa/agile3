@@ -5,23 +5,29 @@ namespace App\Services;
 use App\Models\Dokumen;
 use Illuminate\Support\Facades\Storage;
 
-class DokumenServices {
-    public function handleStore($request) {
-
+class DokumenServices
+{
+    public function handleStore($request)
+    {
         $data = $request->validated();
         $data['lampiran'] = $request->lampiran->store('lampiran_dokumen', 'public');
-        $data['verifikasi'] = false;
+        if (auth()->user()->role == 'admin') {
+            $data['verifikasi'] = true;
+        } else {
+            $data['verifikasi'] = true;
+        }
 
         Dokumen::create($data);
 
         return true;
     }
 
-    public function handleUpdate($request, $dokumen) {
+    public function handleUpdate($request, $dokumen)
+    {
         $data = $request->validated();
 
-        if($request->hasFile('lampiran')){
-            Storage::delete('public/'.$dokumen->lampiran);
+        if ($request->hasFile('lampiran')) {
+            Storage::delete('public/' . $dokumen->lampiran);
             $data['lampiran'] = $request->lampiran->store('lampiran_dokumen', 'public');
         }
 
@@ -30,7 +36,8 @@ class DokumenServices {
         return true;
     }
 
-    public function handleVerifikasi($request, $dokumen) {
+    public function handleVerifikasi($request, $dokumen)
+    {
         $data = $request->validated();
         $data['verifikasi'] = true;
 
@@ -39,9 +46,9 @@ class DokumenServices {
         return true;
     }
 
-    public function handleDestroy($dokumen) {
-
-        Storage::delete('public/'.$dokumen->lampiran);
+    public function handleDestroy($dokumen)
+    {
+        Storage::delete('public/' . $dokumen->lampiran);
         $dokumen->delete();
 
         return true;

@@ -18,6 +18,11 @@
                         <h4>Edit Kode Klasifikasi</h4>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <form class="needs-validation" method="POST"
                             action="{{ route('klasifikasi.update', $klasifikasi) }}">
                             @csrf
@@ -25,7 +30,7 @@
                             <div class="form-group">
                                 <label for="kode">Kode</label>
                                 <input type="text" class="form-control @error('kode') is-invalid @enderror"
-                                    id="kode" name="kode" value="{{ old('kode', $klasifikasi->kode) }}" >
+                                    id="kode" name="kode" value="{{ old('kode', $klasifikasi->kode) }}">
                                 @error('kode')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -36,7 +41,7 @@
                             <div class="form-group">
                                 <label for="uraian">Uraian</label>
                                 <input type="text" class="form-control @error('uraian') is-invalid @enderror"
-                                    id="uraian" name="uraian" value="{{ old('uraian', $klasifikasi->uraian) }}" >
+                                    id="uraian" name="uraian" value="{{ old('uraian', $klasifikasi->uraian) }}">
                                 @error('uraian')
                                     <div class="invalid-feedback">
                                         {{ $message }}

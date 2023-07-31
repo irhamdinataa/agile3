@@ -18,6 +18,11 @@
                         <h4>Edit Repository</h4>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <form class="needs-validation" method="POST"
                             action="{{ route('repository.update', $dokumen->id) }}">
                             @csrf
@@ -40,7 +45,7 @@
                                 @enderror
                             </div>
 
-                            
+
                             <div class="form-group">
                                 <label for="tanggal_dokumen">Tanggal Dokumen</label>
                                 <input type="date" class="form-control @error('tanggal_dokumen') is-invalid @enderror"

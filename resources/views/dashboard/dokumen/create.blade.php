@@ -17,6 +17,11 @@
                         <h4>Masukkan Data Dokumen</h4>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <form class="needs-validation" method="POST" action="{{ route('dokumen.store') }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -70,7 +75,7 @@
                             <div class="form-group">
                                 <label for="lampiran">Lampiran</label>
                                 <input type="file" class="form-control @error('lampiran') is-invalid @enderror"
-                                    id="lampiran" name="lampiran" value="{{ old('lampiran') }}" 
+                                    id="lampiran" name="lampiran" value="{{ old('lampiran') }}"
                                     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf">
                                 @error('lampiran')
                                     <div class="invalid-feedback">

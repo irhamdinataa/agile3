@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
+
+
 class LaporanController extends Controller
 {
     /**
@@ -36,7 +38,7 @@ class LaporanController extends Controller
     {
         $laporan = Laporan::query()
             ->with('users')
-            ->where('verifikasi',false)
+            ->where('verifikasi', false)
             ->get();
         return view('dashboard.laporan.verifikasi_index', compact('laporan'));
     }
@@ -77,7 +79,7 @@ class LaporanController extends Controller
 
     public function verifikasi_update(LaporanRequest $request, Laporan $laporan, LaporanServices $laporanServices)
     {
-        $laporanServices->handleVerifikasi($request, $laporan);
+        $laporanServices->handleVerifikasi($request, $laporan);        
         return redirect()
             ->route('verifikasilaporan.index')
             ->withSuccess('laporan berhasil diverifikasi');
@@ -87,7 +89,7 @@ class LaporanController extends Controller
      * Remove the specified resource from storage.
      */
 
-     public function verifikasi_cancel(Laporan $laporan, LaporanServices $laporanServices)
+    public function verifikasi_cancel(Laporan $laporan, LaporanServices $laporanServices)
     {
         $laporanServices->handleCancel($laporan);
 

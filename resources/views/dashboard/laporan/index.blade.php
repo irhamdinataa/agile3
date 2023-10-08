@@ -114,14 +114,14 @@
             $("#table-1").DataTable({
                 "columnDefs": [{
                     "sortable": false,
-                    "targets": [6, 7,8]
+                    "targets": [8,9]
                 }]
             });
         } else {
             $("#table-1").DataTable({
                 "columnDefs": [{
                     "sortable": false,
-                    "targets": [6,7]
+                    "targets": [8]
                 }]
             });
         }

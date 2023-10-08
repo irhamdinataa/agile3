@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Laporan;
 use Illuminate\Support\Facades\Storage;
 use Mail;
+use PDF;
+use Carbon\Carbon;
 
 class LaporanServices
 {
@@ -12,7 +14,6 @@ class LaporanServices
     {
         $data = $request->validated();
         $data['jurnal'] = $request->jurnal->store('jurnal', 'public');
-        $data['laporan'] = $request->laporan->store('laporan', 'public');
         if (auth()->user()->role == 'admin') {
             $data['verifikasi'] = true;
         } else {
@@ -32,10 +33,6 @@ class LaporanServices
             Storage::delete('public/' . $laporan->jurnal);
             $data['jurnal'] = $request->jurnal->store('jurnal', 'public');
         }
-        if ($request->hasFile('laporan')) {
-            Storage::delete('public/' . $laporan->laporan);
-            $data['laporan'] = $request->laporan->store('laporan', 'public');
-        }
 
         $laporan->update($data);
 
@@ -49,6 +46,17 @@ class LaporanServices
 
         $laporan->update($data);
 
+        $id = $laporan->id;
+        $month = Carbon::now()->format('m');
+        $nama = $laporan->nama;
+        $npm = $laporan->npm;
+        $program = $laporan->prodi;
+        $dosen = $laporan->dosen;
+        $jenis = $laporan->jenis;
+        $judul = $laporan->judul;
+
+        $pdf = PDF::loadView('reports.laporan',compact('id','month','nama','npm','program','dosen','jenis','judul'))->setPaper('a4', 'landscape');
+
         $email['title'] = 'Laporan Telah Di Verifikasi';
         $email['bodyatas'] = 'Selamat, Laporan dengan: ';
         $email['nama'] = 'Nama : ' . $laporan->nama;
@@ -56,8 +64,10 @@ class LaporanServices
         $email['judul'] = 'Judul : ' . $laporan->judul;
         $email['bodybawah'] = 'Berhasil diverifikasi';
         $email['email'] = $laporan->email;
-        Mail::send('emails.verifikasi', $email, function ($message) use ($email) {
-            $message->to($email['email'], $email['email'])->subject($email['title']);
+        Mail::send('emails.verifikasi', $email, function ($message) use ($email, $pdf) {
+            $message->to($email['email'], $email['email'])->subject($email['title'])->attachData($pdf->output(), 'laporan.pdf', [
+                'mime' => 'application/pdf',
+            ]);
         });
 
         return true;
@@ -66,7 +76,6 @@ class LaporanServices
     public function handleCancel($laporan)
     {
         Storage::delete('public/' . $laporan->jurnal);
-        Storage::delete('public/' . $laporan->laporan);
         $laporan->delete();
 
         $email['title'] = 'Laporan Telah Di Tolak';
@@ -86,7 +95,6 @@ class LaporanServices
     public function handleDestroy($laporan)
     {
         Storage::delete('public/' . $laporan->jurnal);
-        Storage::delete('public/' . $laporan->laporan);
         $laporan->delete();
 
         return true;

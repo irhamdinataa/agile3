@@ -110,6 +110,7 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
                         Route::get('/', 'verifikasi_index')->name('index');
                         Route::patch('/{laporan}', 'verifikasi_update')->name('update');
                         Route::delete('/{laporan}', 'verifikasi_cancel')->name('cancel');
+                        Route::get('/download', 'download')->name('download');
                     });
             },
         );

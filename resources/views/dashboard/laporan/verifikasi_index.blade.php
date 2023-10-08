@@ -33,7 +33,6 @@
                                         <th>Program Studi</th>
                                         <th>Dosen Pembimbing Lapangan</th>
                                         <th>Jurnal</th>
-                                        <th>Laporan</th>
                                         @if (hasPermissionMenu(['admin']))
                                             <th>Aksi</th>
                                         @endif
@@ -55,12 +54,6 @@
                                                         class="btn btn-primary"><i class="fas fa-eye"></i></a>
                                                 </div>
                                             </td> 
-                                            <td>
-                                                <div class="d-flex justify-content-center">
-                                                    <a href="{{ Storage::url($item->laporan) }}" target="_blank"
-                                                        class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                                </div>
-                                            </td>
                                             <td class="text-center" style="white-space: nowrap;">
                                                 <form action="{{ route('verifikasilaporan.update', $item->id) }}"
                                                     method="POST" class="d-inline">
@@ -116,7 +109,7 @@
         $("#table-1").DataTable({
             "columnDefs": [{
                 "sortable": false,
-                "targets": [5, 8]
+                "targets": [6,7]
             }]
         });
     </script>

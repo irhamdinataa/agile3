@@ -64,7 +64,7 @@
 
 <body>
     <div class="container">
-        <img src="{{ asset('img/logo_darmajaya.png') }}" alt="">
+    <img src="{{ public_path('img/logo_darmajaya.png') }}" alt="">
         <table class="table table-bordered">
             <tbody>
                 <tr>

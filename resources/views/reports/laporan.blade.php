@@ -65,6 +65,9 @@
 <body>
     <div class="container">
     <img src="{{ public_path('img/logo_darmajaya.png') }}" alt="">
+    <h3>FORM SERAH TERIMA</h3>
+    <h3>LAPORAN KERJA PRAKTEK</h3>
+    <h3>TAHUN 2023</h3>
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -76,6 +79,11 @@
                     <td>Nama </td>
                     <td>:</td>
                     <td>{{ $nama }}</td>
+                </tr><br>
+                <tr>
+                    <td>NPM </td>
+                    <td>:</td>
+                    <td>{{ $npm }}</td>
                 </tr><br>
                 <tr>
                     <td>Program Studi </td>

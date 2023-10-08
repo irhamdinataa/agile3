@@ -48,6 +48,7 @@ class LaporanServices
 
         $id = $laporan->id;
         $month = Carbon::now()->format('m');
+        $date = Carbon::now()->isoFormat('D MMMM Y');
         $nama = $laporan->nama;
         $npm = $laporan->npm;
         $program = $laporan->prodi;
@@ -55,7 +56,7 @@ class LaporanServices
         $jenis = $laporan->jenis;
         $judul = $laporan->judul;
 
-        $pdf = PDF::loadView('reports.laporan',compact('id','month','nama','npm','program','dosen','jenis','judul'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('reports.laporan',compact('id','month','date','nama','npm','program','dosen','jenis','judul'))->setPaper('a4', 'potrait');
 
         $email['title'] = 'Laporan Telah Di Verifikasi';
         $email['bodyatas'] = 'Selamat, Laporan dengan: ';

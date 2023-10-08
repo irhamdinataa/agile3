@@ -116,7 +116,7 @@
         $("#table-1").DataTable({
             "columnDefs": [{
                 "sortable": false,
-                "targets": [5, 8]
+                "targets": [6,7, 8]
             }]
         });
     </script>

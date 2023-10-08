@@ -24,7 +24,7 @@
                             </div>
                         @endif
                         <form class="needs-validation" method="POST"
-                            action="{{ route('repository.update', $laporan->id) }}">
+                            action="{{ route('repository.update', $laporan->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <div class="form-group">
@@ -118,7 +118,6 @@
                             </div>
                             <div class="form-group">
                                 <label for="laporan">Laporan</label>
-                                <p>halaman pengesahan harus sudah ditandatangani</p>
                                 <input type="file" class="form-control @error('laporan') is-invalid @enderror"
                                     id="laporan" name="laporan" value="{{ old('laporan') }}"
                                     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf">
@@ -131,7 +130,7 @@
 
                             <div class="card-footer text-right">
                                 <a id="backbutton" href="#" class="btn btn-danger mr-2">Kembali</a>
-                                <button class="btn btn-primary" type="submit">Edit Data</button>
+                                <button class="btn btn-primary" type="submit">Update</button>
                             </div>
                         </form>
                     </div>

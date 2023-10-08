@@ -102,7 +102,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="jurnal">Jurnal</label>
+                                <label for="jurnal">Input Jurnal</label>
                                 <input type="file" class="form-control @error('jurnal') is-invalid @enderror"
                                     id="jurnal" name="jurnal" value="{{ old('jurnal') }}"
                                     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf">
@@ -113,8 +113,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="laporan">Laporan</label>
-                                <p>(Halaman pengesahan harus sudah ditandatangani)</p>
+                                <label for="laporan">Input Laporan</label>
                                 <input type="file" class="form-control @error('laporan') is-invalid @enderror"
                                     id="laporan" name="laporan" value="{{ old('laporan') }}"
                                     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf">

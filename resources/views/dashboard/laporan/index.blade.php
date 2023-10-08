@@ -35,6 +35,7 @@
                                         <th>Judul</th>
                                         <th>Jenis</th>
                                         <th>Jurnal</th>
+                                        <th>Laporan</th>
                                         @if (hasPermissionMenu(['admin']))
                                             <th>Aksi</th>
                                         @endif
@@ -58,6 +59,12 @@
                                                         class="btn btn-primary"><i class="fas fa-eye"></i></a>
                                                 </div>
                                             </td> 
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    <a href="{{ Storage::url($item->laporan) }}" target="_blank"
+                                                        class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                                </div>
+                                            </td>
                                             @if (hasPermissionMenu(['admin']))
                                                 <td class="text-center" style="white-space: nowrap;">
                                                     <a href="{{ route('repository.edit', $item->id) }}"
@@ -114,14 +121,14 @@
             $("#table-1").DataTable({
                 "columnDefs": [{
                     "sortable": false,
-                    "targets": [8,9]
+                    "targets": [6, 7,8]
                 }]
             });
         } else {
             $("#table-1").DataTable({
                 "columnDefs": [{
                     "sortable": false,
-                    "targets": [8]
+                    "targets": [6,7]
                 }]
             });
         }

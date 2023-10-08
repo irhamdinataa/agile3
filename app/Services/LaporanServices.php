@@ -14,6 +14,7 @@ class LaporanServices
     {
         $data = $request->validated();
         $data['jurnal'] = $request->jurnal->store('jurnal', 'public');
+        $data['laporan'] = $request->laporan->store('laporan', 'public');
         if (auth()->user()->role == 'admin') {
             $data['verifikasi'] = true;
         } else {
@@ -32,6 +33,10 @@ class LaporanServices
         if ($request->hasFile('jurnal')) {
             Storage::delete('public/' . $laporan->jurnal);
             $data['jurnal'] = $request->jurnal->store('jurnal', 'public');
+        }
+        if ($request->hasFile('laporan')) {
+            Storage::delete('public/' . $laporan->laporan);
+            $data['laporan'] = $request->laporan->store('laporan', 'public');
         }
 
         $laporan->update($data);
@@ -56,7 +61,7 @@ class LaporanServices
         $jenis = $laporan->jenis;
         $judul = $laporan->judul;
 
-        $pdf = PDF::loadView('reports.laporan',compact('id','month','date','nama','npm','program','dosen','jenis','judul'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadView('reports.laporan', compact('id', 'month', 'date', 'nama', 'npm', 'program', 'dosen', 'jenis', 'judul'))->setPaper('a4', 'potrait');
 
         $email['title'] = 'Laporan Telah Di Verifikasi';
         $email['bodyatas'] = 'Selamat, Laporan dengan: ';
@@ -66,9 +71,12 @@ class LaporanServices
         $email['bodybawah'] = 'Berhasil diverifikasi';
         $email['email'] = $laporan->email;
         Mail::send('emails.verifikasi', $email, function ($message) use ($email, $pdf) {
-            $message->to($email['email'], $email['email'])->subject($email['title'])->attachData($pdf->output(), 'laporan.pdf', [
-                'mime' => 'application/pdf',
-            ]);
+            $message
+                ->to($email['email'], $email['email'])
+                ->subject($email['title'])
+                ->attachData($pdf->output(), 'laporan.pdf', [
+                    'mime' => 'application/pdf',
+                ]);
         });
 
         return true;
@@ -77,6 +85,7 @@ class LaporanServices
     public function handleCancel($laporan)
     {
         Storage::delete('public/' . $laporan->jurnal);
+        Storage::delete('public/' . $laporan->laporan);
         $laporan->delete();
 
         $email['title'] = 'Laporan Telah Di Tolak';
@@ -96,6 +105,7 @@ class LaporanServices
     public function handleDestroy($laporan)
     {
         Storage::delete('public/' . $laporan->jurnal);
+        Storage::delete('public/' . $laporan->laporan);
         $laporan->delete();
 
         return true;

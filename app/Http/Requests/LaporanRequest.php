@@ -31,6 +31,7 @@ class LaporanRequest extends FormRequest
             'prodi' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'dosen' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'jurnal' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'mimetypes:application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf'],
+            'laporan' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'mimetypes:application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf'],
         ];
     }
 
@@ -45,14 +46,16 @@ class LaporanRequest extends FormRequest
             'judul.required' => 'judul laporan diperlukan.',
             'dosen.required' => 'dosen diperlukan.',
             'jurnal.required' => 'file jurnal diperlukan.',
+            'laporan.required' => 'file laporan diperlukan.',
             'jurnal.mimetypes' => 'file jurnal harus berupa word atau pdf.',
+            'laporan.mimetypes' => 'file laporan harus berupa word atau pdf.',
         ];
     }
 
     public function prepareForValidation()
     {
         if ($this->isMethod('patch')) {
-            $fields = ['email', 'nama', 'npm', 'prodi' ,'jenis','judul','dosen', 'jurnal'];
+            $fields = ['email', 'nama', 'npm', 'prodi' ,'jenis','judul','dosen', 'jurnal','laporan'];
 
             foreach ($fields as $key) {
                 if ($this->input($key) === null) {

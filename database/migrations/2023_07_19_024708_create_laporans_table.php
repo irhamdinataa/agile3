@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('dosen');
             $table->string('judul');
             $table->string('jurnal');
+            $table->string('laporan');
             $table->boolean('verifikasi');
             $table->timestamps();
         });

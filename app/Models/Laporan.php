@@ -9,7 +9,7 @@ use App\Models\User;
 class Laporan extends Model
 {
     use HasFactory;
-    protected $fillable = ['email','nama', 'npm', 'jenis', 'judul','verifikasi', 'prodi', 'dosen','jurnal'];
+    protected $fillable = ['email','nama', 'npm', 'jenis', 'judul','verifikasi', 'prodi', 'dosen','laporan','jurnal'];
 
     public function users()
     {

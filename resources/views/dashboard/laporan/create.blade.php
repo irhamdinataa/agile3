@@ -112,6 +112,18 @@
                                     </div>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="laporan">Laporan</label>
+                                <p>(Halaman pengesahan harus sudah ditandatangani)</p>
+                                <input type="file" class="form-control @error('laporan') is-invalid @enderror"
+                                    id="laporan" name="laporan" value="{{ old('laporan') }}"
+                                    accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/pdf">
+                                @error('laporan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
                             <div class="card-footer text-right">
                                 <a id="backbutton" href="#" class="btn btn-danger mr-2">Kembali</a>

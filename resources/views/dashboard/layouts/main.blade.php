@@ -20,6 +20,8 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/css/components.css') }}" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
     @stack('after-style')
 

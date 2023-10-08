@@ -17,7 +17,6 @@ class UserController extends Controller
     {
         $users = User::query()
             ->where('role', 'user')
-            ->where('verifikasi', true)
             ->get();
         return view('dashboard.users.index', [
             'users' => $users,
@@ -41,7 +40,7 @@ class UserController extends Controller
             $user->handleStore($request);
             return redirect()
                 ->route('register')
-                ->withSuccess('berhasil membuat akun, akan di informasikan di email apabila sudah di terima oleh admin');
+                ->withSuccess('berhasil membuat akun');
         } catch (\Exception $e) {
             return redirect()
                 ->back()
@@ -95,20 +94,4 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function verifikasi_index()
-    {
-        $users = User::query()
-            ->where('role', 'user')
-            ->where('verifikasi', false)
-            ->get();
-        return view('dashboard.users.verifikasi_index', compact('users'));
-    }
-
-    public function verifikasi_update(UserRequest $request, User $user, UserServices $userServices)
-    {
-        $userServices->handleVerifikasi($request, $user);
-        return redirect()
-            ->route('verifikasiuser.index')
-            ->withSuccess('user berhasil diverifikasi');
-    }
 }

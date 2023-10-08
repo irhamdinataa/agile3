@@ -19,25 +19,10 @@
                                             </div>
                                             <div class="card-wrap">
                                                 <div class="card-header">
-                                                    <h4>Total Dokumen</h4>
+                                                    <h4>Total Laporan Diverifikasi</h4>
                                                 </div>
                                                 <div class="card-body">
-                                                    {{$dokumen}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                                        <div class="card card-statistic-1">
-                                            <div class="card-icon bg-warning">
-                                                <i class="fas fa-code-branch "></i>
-                                            </div>
-                                            <div class="card-wrap">
-                                                <div class="card-header">
-                                                    <h4>Total Klasifikasi</h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    {{$klasifikasi}}
+                                                    {{$laporandiverifikasi}}
                                                 </div>
                                             </div>
                                         </div>
@@ -53,6 +38,21 @@
                                                 </div>
                                                 <div class="card-body">
                                                     {{$user}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                        <div class="card card-statistic-1">
+                                            <div class="card-icon bg-warning">
+                                                <i class="fas fa-envelope-open-text "></i>
+                                            </div>
+                                            <div class="card-wrap">
+                                                <div class="card-header">
+                                                    <h4>Total Laporan Belum Diverifikasi</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    {{$laporanbelum}}
                                                 </div>
                                             </div>
                                         </div>

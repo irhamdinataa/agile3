@@ -1,20 +1,20 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Verifikasi Repository | E-Arsip')
+@section('title', 'Verifikasi Laporan | E-Arsip')
 @section('container')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Verifikasi Repository</h1>
+                <h1>Verifikasi Laporan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item active"><a href="{{ route('repository.index') }}">Verifikasi Repository</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('repository.index') }}">Verifikasi Laporan</a></div>
                 </div>
             </div>
 
             <div class="section-body">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Tabel Verifikasi Repository</h4>
+                        <h4>Tabel Verifikasi Laporan</h4>
                     </div>
                     <div class="card-body">
                         @if (session('success'))
@@ -25,37 +25,44 @@
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
-                                    <tr class="text-center">
+                                <tr class="text-center">
                                         <th>No</th>
-                                        <th>Klasifikasi</th>
-                                        <th>Tanggal Dokumen</th>
-                                        <th>Tanggal Diterima</th>
-                                        <th>Perihal</th>
-                                        <th>Lampiran</th>
-                                        <th>Penerima</th>
-                                        <th>Tanggal Input</th>
-                                        <th>Aksi</th>
+                                        <th>Email</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>NPM</th>
+                                        <th>Program Studi</th>
+                                        <th>Dosen Pembimbing Lapangan</th>
+                                        <th>Jurnal</th>
+                                        <th>Laporan</th>
+                                        @if (hasPermissionMenu(['admin']))
+                                            <th>Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php $no = 1; @endphp
-                                    @foreach ($dokumen as $item)
+                                    @foreach ($laporan as $item)
                                         <tr>
                                             <td class="text-center">{{ $no }}</td>
-                                            <td>{{ $item->klasifikasis->nama }}</td>
-                                            <td>{{ $item['tanggal_dokumen'] }}</td>
-                                            <td>{{ $item['tanggal_diterima'] }}</td>
-                                            <td>{{ $item['perihal'] }}</td>
+                                            <td>{{ $item['email'] }}</td>
+                                            <td>{{ $item['nama'] }}</td>
+                                            <td>{{ $item['npm'] }}</td>
+                                            <td>{{ $item['prodi'] }}</td>
+                                            <td>{{ $item['dosen'] }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ Storage::url($item->lampiran) }}" target="_blank"
+                                                    <a href="{{ Storage::url($item->jurnal) }}" target="_blank"
+                                                        class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                                </div>
+                                            </td> 
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    <a href="{{ Storage::url($item->laporan) }}" target="_blank"
                                                         class="btn btn-primary"><i class="fas fa-eye"></i></a>
                                                 </div>
                                             </td>
-                                            <td>{{ $item->users->name }}</td>
-                                            <td>{{ $item['created_at'] }}</td>
                                             <td class="text-center" style="white-space: nowrap;">
-                                                <form action="{{ route('verifikasidokumen.update', $item->id) }}"
+                                                <form action="{{ route('verifikasilaporan.update', $item->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     @method('PATCH')
@@ -63,12 +70,12 @@
                                                         <i class="fas fa-check-circle"></i>
                                                     </button>
                                                 </form>
-                                                <form action="{{ route('repository.destroy', $item->id) }}" method="POST"
+                                                <form action="{{ route('verifikasilaporan.cancel', $item->id) }}" method="POST"
                                                     class="d-inline">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
-                                                        onclick="return confirm('Anda yakin ingin menghapus data ini ?')"
+                                                        onclick="return confirm('Anda yakin ingin menolak data ini ?')"
                                                         class="btn btn-danger"><i class="fas fa-window-close"></i></button>
                                                 </form>
                                             </td>

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->nullable();
             $table->string('foto_profile')->nullable();
-            $table->boolean('verifikasi');
             $table->primary('id');
             $table->rememberToken();
             $table->timestamps();

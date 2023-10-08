@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dokumen;
-use App\Services\DokumenServices;
-use App\Http\Requests\DokumenRequest;
-use App\Models\Klasifikasi;
+use App\Models\Laporan;
 use Illuminate\Http\Request;
+use App\Services\LaporanServices;
+use App\Http\Requests\LaporanRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
-class DokumenController extends Controller
+class LaporanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $dokumen = Dokumen::query()
-            ->with('users', 'klasifikasis')
+        $laporan = Laporan::query()
+            ->with('users')
             ->where('verifikasi', true)
             ->get();
         return view('dashboard.laporan.index', compact('laporan'));
@@ -30,17 +29,14 @@ class DokumenController extends Controller
      */
     public function create()
     {
-        $klasifikasis = Klasifikasi::query()->pluck('id', 'kode');
-        return view('dashboard.laporan.create', [
-            'klasifikasis' => $klasifikasis,
-        ]);
+        return view('dashboard.laporan.create');
     }
 
     public function verifikasi_index()
     {
-        $dokumen = Dokumen::query()
-            ->with('users', 'klasifikasis')
-            ->where('verifikasi', false)
+        $laporan = Laporan::query()
+            ->with('users')
+            ->where('verifikasi',false)
             ->get();
         return view('dashboard.laporan.verifikasi_index', compact('laporan'));
     }
@@ -48,9 +44,9 @@ class DokumenController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DokumenRequest $request, DokumenServices $dokumenServices)
+    public function store(LaporanRequest $request, LaporanServices $laporanServices)
     {
-        $dokumenServices->handleStore($request);
+        $laporanServices->handleStore($request);
 
         return redirect()
             ->route('laporan.create')
@@ -60,41 +56,48 @@ class DokumenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dokumen $dokumen)
+    public function edit(Laporan $laporan)
     {
-        $klasifikasis = Klasifikasi::query()->pluck('id', 'kode');
         return view('dashboard.laporan.edit', [
             'laporan' => $laporan,
-            'klasifikasis' => $klasifikasis,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(DokumenRequest $request, Dokumen $dokumen, DokumenServices $dokumenServices)
+    public function update(LaporanRequest $request, Laporan $laporan, LaporanServices $laporanServices)
     {
-        $dokumenServices->handleUpdate($request, $dokumen);
+        $laporanServices->handleUpdate($request, $laporan);
 
         return redirect()
             ->route('repository.index')
             ->withSuccess('laporan berhasil diubah');
     }
 
-    public function verifikasi_update(DokumenRequest $request, Dokumen $dokumen, DokumenServices $dokumenServices)
+    public function verifikasi_update(LaporanRequest $request, Laporan $laporan, LaporanServices $laporanServices)
     {
-        $dokumenServices->handleVerifikasi($request, $dokumen);
+        $laporanServices->handleVerifikasi($request, $laporan);
         return redirect()
-            ->route('verifikasidokumen.index')
+            ->route('verifikasilaporan.index')
             ->withSuccess('laporan berhasil diverifikasi');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dokumen $dokumen, DokumenServices $dokumenServices)
+
+     public function verifikasi_cancel(Laporan $laporan, LaporanServices $laporanServices)
     {
-        $dokumenServices->handleDestroy($dokumen);
+        $laporanServices->handleCancel($laporan);
+
+        return redirect()
+            ->route('repository.index')
+            ->withSuccess('laporan berhasil ditolak');
+    }
+    public function destroy(Laporan $laporan, LaporanServices $laporanServices)
+    {
+        $laporanServices->handleDestroy($laporan);
 
         return redirect()
             ->route('repository.index')

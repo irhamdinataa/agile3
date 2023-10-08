@@ -14,7 +14,6 @@ class UserServices
         $data['id'] = \Uuid::generate(4);
         $data['password'] = bcrypt($data['password']);
         $data['role'] = 'user';
-        $data['verifikasi'] = false;
         User::create($data);
 
         return true;
@@ -32,23 +31,6 @@ class UserServices
         }
         $user->update($data);
 
-        return true;
-    }
-
-    public function handleVerifikasi($request, $user)
-    {
-        $data = $request->validated();
-        $data['verifikasi'] = true;
-
-        $user->update($data);
-
-        $email['title'] = 'Akun Telah Di Verifikasi';
-        $email['body'] = 'Selamat, Sekarang anda sudah bisa login dengan email dan password yang anda buat sebelumnya';
-
-        $email['email'] = $user->email;
-        Mail::send('emails.verifikasi', $email, function ($message) use ($email) {
-            $message->to($email['email'], $email['email'])->subject($email['title']);
-        });
         return true;
     }
 

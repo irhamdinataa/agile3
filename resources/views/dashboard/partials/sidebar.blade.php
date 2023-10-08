@@ -13,10 +13,10 @@
                             class="fas fa-fire"></i><span>Dashboard</span></a>
                 </li>
             @endif
-            <li class="{{ hasRoutePrefix('dokumen') ? 'active' : '' }}">
+            <li class="{{ hasRoutePrefix('laporan') ? 'active' : '' }}">
 
-                <a href="{{ route('dokumen.create') }}" class="nav-link"><i class="fas fa-file-alt"></i>
-                    <span>Input Dokumen</span></a>
+                <a href="{{ route('laporan.create') }}" class="nav-link"><i class="fas fa-file-alt"></i>
+                    <span>Input Laporan</span></a>
             </li>
             <li class="{{ hasRoutePrefix('repository') ? 'active' : '' }}">
 
@@ -24,26 +24,15 @@
                     <span>Repository</span></a>
             </li>
             @if (hasPermissionMenu(['admin']))
-                <li class="{{ hasRoutePrefix('klasifikasi') ? 'active' : '' }}">
-
-                    <a href="{{ route('klasifikasi.index') }}" class="nav-link"><i class="fas fa-code-branch"></i>
-                        <span>Klasifikasi</span></a>
-                </li>
                 <li class="{{ hasRoutePrefix('users') ? 'active' : '' }}">
 
                     <a href="{{ route('users.index') }}" class="nav-link"><i class="fas fa-user"></i>
                         <span>Manajemen User</span></a>
                 </li>
-                <li class="dropdown">
-                    <a id="btn-dropdown-report" href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                <li class="{{ hasRoutePrefix('verifikasi_laporan') ? 'active' : '' }}">
+                    <a href="{{ route('verifikasilaporan.index') }}" class="nav-link"><i
                             class="fas fa-check-circle"></i>
-                        <span>Verifikasi</span></a>
-
-                    <ul
-                        class="dropdown-menu dropdown-menu-side {{ Str::contains(Request::path(), 'verifikasi') ? 'show' : '' }}">
-                        <li class="{{ hasRoutePrefix('verifikasi_user') ? 'active' : '' }}"><a class="nav-link " href="{{ route('verifikasiuser.index') }}">User</a></li>
-                        <li class="{{ hasRoutePrefix('verifikasi_dokumen') ? 'active' : '' }}"><a class="nav-link " href="{{ route('verifikasidokumen.index') }}">Dokumen</a></li>
-                    </ul>
+                        <span>Verifikasi Laporan</span></a>
                 </li>
             @endif
         </ul>

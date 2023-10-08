@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 use App\Models\User;
+use App\Models\Prodis;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'usertest@gmail.com',
             'password' => bcrypt('usertest'),
             'role' => 'admin',
-            'verifikasi' => true
         ]);
+
     }
 }

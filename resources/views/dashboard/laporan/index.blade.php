@@ -27,13 +27,14 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th>No</th>
-                                        <th>Klasifikasi</th>
-                                        <th>Tanggal Dokumen</th>
-                                        <th>Tanggal Diterima</th>
-                                        <th>Perihal</th>
-                                        <th>Lampiran</th>
-                                        <th>Penerima</th>
-                                        <th>Tanggal Input</th>
+                                        <th>Email</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>NPM</th>
+                                        <th>Program Studi</th>
+                                        <th>Dosen Pembimbing Lapangan</th>
+                                        <th>Judul</th>
+                                        <th>Jenis</th>
+                                        <th>Jurnal</th>
                                         @if (hasPermissionMenu(['admin']))
                                             <th>Aksi</th>
                                         @endif
@@ -41,21 +42,22 @@
                                 </thead>
                                 <tbody>
                                     @php $no = 1; @endphp
-                                    @foreach ($dokumen as $item)
+                                    @foreach ($laporan as $item)
                                         <tr>
                                             <td class="text-center">{{ $no }}</td>
-                                            <td>{{ $item->klasifikasis->kode }}</td>
-                                            <td>{{ $item['tanggal_dokumen'] }}</td>
-                                            <td>{{ $item['tanggal_diterima'] }}</td>
-                                            <td>{{ $item['perihal'] }}</td>
+                                            <td>{{ $item['email'] }}</td>
+                                            <td>{{ $item['nama'] }}</td>
+                                            <td>{{ $item['npm'] }}</td>
+                                            <td>{{ $item['prodi'] }}</td>
+                                            <td>{{ $item['dosen'] }}</td>
+                                            <td>{{ $item['judul'] }}</td>
+                                            <td>{{ $item['jenis'] }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ Storage::url($item->lampiran) }}" target="_blank"
+                                                    <a href="{{ Storage::url($item->jurnal) }}" target="_blank"
                                                         class="btn btn-primary"><i class="fas fa-eye"></i></a>
                                                 </div>
-                                            </td>
-                                            <td>{{ $item->users->name }}</td>
-                                            <td>{{ $item['created_at'] }}</td>
+                                            </td> 
                                             @if (hasPermissionMenu(['admin']))
                                                 <td class="text-center" style="white-space: nowrap;">
                                                     <a href="{{ route('repository.edit', $item->id) }}"
@@ -112,14 +114,14 @@
             $("#table-1").DataTable({
                 "columnDefs": [{
                     "sortable": false,
-                    "targets": [5, 8]
+                    "targets": [6, 7,8]
                 }]
             });
         } else {
             $("#table-1").DataTable({
                 "columnDefs": [{
                     "sortable": false,
-                    "targets": [5]
+                    "targets": [6,7]
                 }]
             });
         }

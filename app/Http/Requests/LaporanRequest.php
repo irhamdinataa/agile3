@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class DokumenRequest extends FormRequest
+class LaporanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,11 @@ class DokumenRequest extends FormRequest
             'email' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'),'email'],
             'nama' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'npm' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
+            'jenis' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
+            'judul' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'prodi' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
             'dosen' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes')],
-            'jurnal' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'mimetypes:application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf', 'max:5000'],
-            'laporan' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'mimetypes:application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf', 'max:5000'],
+            'jurnal' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'mimetypes:application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf'],
         ];
     }
 
@@ -38,19 +39,20 @@ class DokumenRequest extends FormRequest
         return [
             'email.required' => 'email diperlukan.',
             'nama.required' => 'nama diperlukan.',
-            'npm.required' => 'npm diperlukan.',
-            'jenis.required' => 'jenis diperlukan.',
-            'prodi.required' => 'program studi diterima diperlukan.',
-            'dosen.required' => 'perihal diperlukan.',
-            'jurnal.required' => 'lampiran diperlukan.',
-            'laporan.required' => 'lampiran diperlukan.',
+            'npm.required' => 'NPM diperlukan.',
+            'prodi.required' => 'program studi diperlukan.',
+            'jenis.required' => 'jenis laporan diperlukan.',
+            'judul.required' => 'judul laporan diperlukan.',
+            'dosen.required' => 'dosen diperlukan.',
+            'jurnal.required' => 'file jurnal diperlukan.',
+            'jurnal.mimetypes' => 'file jurnal harus berupa word atau pdf.',
         ];
     }
 
     public function prepareForValidation()
     {
         if ($this->isMethod('patch')) {
-            $fields = ['email', 'nama', 'npm','jenis', 'prodi', 'dosen', 'jurnal','laporan'];
+            $fields = ['email', 'nama', 'npm', 'prodi' ,'jenis','judul','dosen', 'jurnal'];
 
             foreach ($fields as $key) {
                 if ($this->input($key) === null) {

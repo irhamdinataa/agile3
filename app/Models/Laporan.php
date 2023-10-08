@@ -6,17 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
-class Dokumen extends Model
+class Laporan extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    protected $fillable = ['email','nama', 'npm', 'jenis', 'judul','verifikasi', 'prodi', 'dosen','jurnal'];
 
     public function users()
     {
         return $this->belongsTo(User::class, 'users_id');
-    }
-    public function klasifikasis()
-    {
-        return $this->belongsTo(Klasifikasi::class, 'klasifikasi_id');
     }
 }

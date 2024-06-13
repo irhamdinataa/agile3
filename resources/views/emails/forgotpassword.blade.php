@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>E-Arsip App</title>
+    <title>PackingApp</title>
     <style>
         body {
             margin: 0;

@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Verifikasi Laporan | E-Arsip')
+@section('title', 'Verifikasi Laporan | PackingApp')
 @section('container')
     <div class="main-content">
         <section class="section">

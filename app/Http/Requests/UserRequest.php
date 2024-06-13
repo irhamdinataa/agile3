@@ -23,10 +23,11 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            'role' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'string'],
             'name' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'string', 'max:255'],
             'email' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'email'],
             'password' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'alpha_dash'],
-            'foto_profile' => ['max:5000'],
+            'foto_profile' => [Rule::when($this->isMethod('POST'), 'required', 'sometimes'), 'max:5000'],
         ];
 
         return $rules;
@@ -38,19 +39,30 @@ class UserRequest extends FormRequest
             'name.required' => 'nama diperlukan.',
             'email.required' => 'email diperlukan.',
             'password.required' => 'password diperlukan.',
+            'foto_profile.required' => 'foto profile diperlukan.',
+            'role.required' => 'tipe karyawan diperlukan.',
+
         ];
     }
 
     public function prepareForValidation()
     {
         if ($this->isMethod('PATCH')) {
-            $fields = ['name', 'email', 'password', 'foto_profile'];
+            $fields = [
+                'role',
+                'name',
+                'email',
+                'password',
+                'foto_profile',
+            ];
 
             foreach ($fields as $field) {
-                if ($this->input($field) === null) {
+                if ($this->input($field) === null){
                     $this->request->remove($field);
                 }
+
             }
+
         }
     }
 }

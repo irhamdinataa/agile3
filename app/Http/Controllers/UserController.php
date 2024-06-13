@@ -15,9 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query()
-            ->where('role', 'user')
-            ->get();
+        $users = User::query()->where('role', 'produksi')->orWhere('role', 'pengadaan')->get();
         return view('dashboard.users.index', [
             'users' => $users,
         ]);
@@ -28,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.users.create');
     }
 
     /**
@@ -36,17 +34,8 @@ class UserController extends Controller
      */
     public function store(UserRequest $request, UserServices $user)
     {
-        try {
-            $user->handleStore($request);
-            return redirect()
-                ->route('register')
-                ->withSuccess('berhasil membuat akun');
-        } catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->with(['error' => 'email already used'])
-                ->withInput($request->all);
-        }
+        $user->handleStore($request);
+        return redirect()->route('users.index');
     }
 
     /**
@@ -67,22 +56,28 @@ class UserController extends Controller
         ]);
     }
 
+    public function profile(User $user)
+    {
+        return view('dashboard.profile.edit', [
+            'user' => $user,
+        ]);
+    }
+    public function profile_update(UserRequest $request, User $user, UserServices $userServices)
+    {
+        $userServices->handleUpdate($request, $user);
+        return redirect()
+            ->route('profile.edit', auth()->user()->id)
+            ->withSuccess('profile berhasil diubah');
+    }
     /**
      * Update the specified resource in storage.
      */
     public function update(UserRequest $request, User $user, UserServices $userServices)
     {
-        // dd(hasRoutePrefix('users'));
         $userServices->handleUpdate($request, $user);
-        if (Str::startsWith(url()->current(), route('users.edit', auth()->user()->id))) {
-            return redirect()
-                ->route('users.edit', auth()->user()->id)
-                ->withSuccess('user berhasil diubah');
-        } else {
-            return redirect()
-                ->route('profile.edit', auth()->user()->id)
-                ->withSuccess('profile berhasil diubah');
-        }
+        return redirect()
+            ->route('users.edit', $user->id)
+            ->withSuccess('user berhasil diubah');
     }
 
     /**
@@ -93,5 +88,4 @@ class UserController extends Controller
         $userServices->handleDestroy($user);
         return redirect()->route('users.index');
     }
-
 }

@@ -1,20 +1,20 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Repository | E-Arsip')
+@section('title', 'Verifikasi Laporan | PackingApp')
 @section('container')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Repository</h1>
+                <h1>Verifikasi Laporan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item active"><a href="{{ route('repository.index') }}">Repository</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('repository.index') }}">Verifikasi Laporan</a></div>
                 </div>
             </div>
 
             <div class="section-body">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Tabel Repository</h4>
+                        <h4>Tabel Verifikasi Laporan</h4>
                     </div>
                     <div class="card-body">
                         @if (session('success'))
@@ -25,15 +25,13 @@
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
-                                    <tr class="text-center">
+                                <tr class="text-center">
                                         <th>No</th>
                                         <th>Email</th>
                                         <th>Nama Lengkap</th>
                                         <th>NPM</th>
                                         <th>Program Studi</th>
                                         <th>Dosen Pembimbing Lapangan</th>
-                                        <th>Judul</th>
-                                        <th>Jenis</th>
                                         <th>Jurnal</th>
                                         <th>Laporan</th>
                                         @if (hasPermissionMenu(['admin']))
@@ -51,8 +49,6 @@
                                             <td>{{ $item['npm'] }}</td>
                                             <td>{{ $item['prodi'] }}</td>
                                             <td>{{ $item['dosen'] }}</td>
-                                            <td>{{ $item['judul'] }}</td>
-                                            <td>{{ $item['jenis'] }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <a href="{{ Storage::url($item->jurnal) }}" target="_blank"
@@ -65,20 +61,24 @@
                                                         class="btn btn-primary"><i class="fas fa-eye"></i></a>
                                                 </div>
                                             </td>
-                                            @if (hasPermissionMenu(['admin']))
-                                                <td class="text-center" style="white-space: nowrap;">
-                                                    <a href="{{ route('repository.edit', $item->id) }}"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('repository.destroy', $item->id) }}"
-                                                        method="POST" class="d-inline">
-                                                        @method('delete')
-                                                        @csrf
-                                                        <button type="submit"
-                                                            onclick="return confirm('Anda yakin ingin menghapus data ini ?')"
-                                                            class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                                    </form>
-                                                </td>
-                                            @endif
+                                            <td class="text-center" style="white-space: nowrap;">
+                                                <form action="{{ route('verifikasilaporan.update', $item->id) }}"
+                                                    method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fas fa-check-circle"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('verifikasilaporan.cancel', $item->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit"
+                                                        onclick="return confirm('Anda yakin ingin menolak data ini ?')"
+                                                        class="btn btn-danger"><i class="fas fa-window-close"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         @php $no++; @endphp
                                     @endforeach
@@ -113,24 +113,11 @@
 
     <!-- Page Specific JS File -->
     <script>
-        <?php
-        $role = auth()->user()->role;
-        ?>
-        var role = "<?php echo $role; ?>";
-        if (role == 'admin') {
-            $("#table-1").DataTable({
-                "columnDefs": [{
-                    "sortable": false,
-                    "targets": [8, 9,10]
-                }]
-            });
-        } else {
-            $("#table-1").DataTable({
-                "columnDefs": [{
-                    "sortable": false,
-                    "targets": [8,9]
-                }]
-            });
-        }
+        $("#table-1").DataTable({
+            "columnDefs": [{
+                "sortable": false,
+                "targets": [6,7, 8]
+            }]
+        });
     </script>
 @endpush

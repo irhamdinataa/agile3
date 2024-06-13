@@ -27,11 +27,7 @@ class LoginController extends Controller
             $user = Auth::user();
             $user->setRememberToken(Str::random(60));
             $user->save();
-            if (auth()->user()->role == 'admin') {
                 return redirect()->intended('/dashboard');
-            } else {
-                return redirect()->intended('/repository');
-            }
         }
         return redirect()
             ->back()
@@ -41,11 +37,7 @@ class LoginController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            if (auth()->user()->role == 'admin') {
                 return redirect()->intended('/dashboard');
-            } else {
-                return redirect()->intended('/repository');
-            }
         }
         return view('login.index');
     }
@@ -53,10 +45,6 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect()->intended('/');
-    }
-    public function register()
-    {
-        return view('register.index');
     }
     public function forgotpassword()
     {
@@ -78,7 +66,7 @@ class LoginController extends Controller
                 ->where('email', $request->email)
                 ->exists()
         ) {
-            $password = Str::random(3) . 'earsipapp' . str_pad(random_int(0, 999), 3, '0', STR_PAD_LEFT);
+            $password = Str::random(3) . 'packing' . str_pad(random_int(0, 999), 3, '0', STR_PAD_LEFT);
             \DB::table('users')
                 ->where('email', $request->email)
                 ->update([
@@ -86,7 +74,7 @@ class LoginController extends Controller
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
             $data['email'] = $request->email;
-            $data['title'] = 'Your New E-Arsip Account Password';
+            $data['title'] = 'Your New PackingApp Account Password';
             $data['body'] = sprintf('New password : %s', $password);
             Mail::send('emails.forgotpassword', $data, function ($message) use ($data) {
                 $message->to($data['email'], $data['email'])->subject($data['title']);

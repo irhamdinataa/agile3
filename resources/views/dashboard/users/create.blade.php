@@ -1,37 +1,35 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Edit User | PackingApp')
+@section('title', 'Edit Profile | PackingApp')
 @section('container')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>User</h1>
+                <h1>Profile</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('users.index') }}">User</a></div>
-                    <div class="breadcrumb-item active"><a href="{{ route('users.create') }}">Edit User</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('users.create') }}">Tambah User</a></div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Edit User</h2>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Edit Data User</h4>
+                        <h4>Tambah User</h4>
                     </div>
                     <div class="card-body">
-                        <form class="needs-validation" method="POST" action="{{ route('users.update', $user) }}"
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form class="needs-validation" method="POST" action="{{ route('users.store') }}"
                             enctype="multipart/form-data">
                             @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="_method" value="PATCH">
 
                             <div class="form-group">
                                 <label for="foto_profile">Foto Profile</label>
-                                <img id="preview_foto_profile" class="d-block mx-auto mb-3"
-                                    src="{{ asset('storage/' . $user->foto_profile) }}" alt="" width="80px"
-                                    height="80px">
                                 <input type="file" class="form-control @error('foto_profile') is-invalid @enderror"
-                                    id="foto_profile" name="foto_profile" value="{{ old('foto_profile') }}"
+                                    id="foto_profile" name="foto_profile" value="{{ old('foto_profile') }}" required
                                     accept="image/png, image/jpg, image/jpeg">
                                 @error('foto_profile')
                                     <div class="invalid-feedback">
@@ -41,10 +39,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="user_id">User ID</label>
-                                <input type="text" class="form-control @error('user_id') is-invalid @enderror"
-                                    id="user_id" name="user_id" value="{{ old('user_id', $user->user_id) }}" required>
-                                @error('user_id')
+                                <label for="role">Tipe Karyawan</label>
+                                <select name="role" id="role"
+                                    class="form-control @error('role') is-invalid @enderror">
+                                    <option hidden selected disabled value>Pilih Tipe karyawan</option>
+                                    <option value="pengadaan">Pengadaan</option>
+                                    <option value="produksi">Produksi</option>
+                                </select>
+                                @error('role')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -53,8 +55,8 @@
 
                             <div class="form-group">
                                 <label for="name">Nama</label>
-                                <input type="name" class="form-control @error('name') is-invalid @enderror"
-                                    id="name" name="name" value="{{ old('name', $user->name) }}" required>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="name" name="name" value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -62,10 +64,11 @@
                                 @enderror
                             </div>
 
+
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                                    id="email" name="email" value="{{ old('email') }}" required>
                                 @error('email')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -74,9 +77,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password Baru (optional)</label>
+                                <label for="password">Password</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    id="password" name="password" value="{{ old('password') }}">
+                                    id="password" name="password" value="{{ old('password') }}" required>
                                 @error('password')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -85,8 +88,8 @@
                             </div>
 
                             <div class="card-footer text-right">
-                                <a id="backbutton" href="#" class="btn btn-danger mr-2">Kembali</a>
-                                <button class="btn btn-primary" type="submit">Edit Data</button>
+                                <a href="{{ route('users.index') }}" class="btn btn-danger mr-2">Kembali</a>
+                                <button class="btn btn-primary" type="submit">Tambah Data</button>
                             </div>
                         </form>
                     </div>

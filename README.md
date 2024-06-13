@@ -1,4 +1,4 @@
-# E-Arsip App
+# PackingApp
 
 ## requirement
 1. 8.1 php version 
@@ -26,6 +26,12 @@
 6. untuk akses file lampiran yang ada di storage `php artisan storage:link`
 7. pastikan database server dan web server berjalan, kemudian start aplikasi dengan `php artisan serve`
 
-## default admin account
-email : usertest@gmail.com
-password : usertest
+## default account
+email : admin1@gmail.com
+password : admin1
+
+email : produksi1@gmail.com
+password : produksi1
+
+email : pengadaan1@gmail.com
+password : pengadaan1

@@ -1,60 +1,71 @@
 @extends('dashboard.layouts.main')
-@section('title', 'User | PackingApp')
+@section('title', 'Pesanan Customer | PackingApp')
 @section('container')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>User</h1>
+                <h1>Pesanan Customer</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item active"><a href="{{ route('users.index') }}">User</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('PesananCustomer.index') }}">Pesanan Customer</a>
+                    </div>
                 </div>
             </div>
 
             <div class="section-body">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Tabel User</h4>
+                        <h4>Tabel Pesanan Customer</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah User</a>
+                            <a href="{{ route('PesananCustomer.create') }}" class="btn btn-primary">Tambah Pesanan</a>
+                            @if (hasPermissionMenu(['admin']))
+                            <a href="{{ route('PesananCustomer.download') }}" class="btn btn-primary">Export PDF</a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr class="text-center">
                                         <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Foto Profile</th>
-                                        <th>Email</th>
-                                        <th>Waktu Dibuat</th>
+                                        <th>Nama Produk</th>
+                                        <th>Kebutuhan</th>
+                                        <th>Done</th>
+                                        <th>To do</th>
+                                        <th>Tanggal Permintaan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @php $no = 1; @endphp
+                                    @foreach ($PesananCustomer as $item)
                                         <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>
-                                            <img src="{{ $user->foto_profile ? asset('storage/' . $user->foto_profile) : asset('admin/img/avatar/avatar-1.png') }}" alt="" width="80px" height="80px">
-                                            </td>
-                                            <td>{{ $user->email }}</td>
-                                            <td class="text-center">{{ $user->created_at }}</td>
-                                            <td class="text-center" style="white-space: nowrap;"><a
-                                                    href="{{ route('users.edit', $user) }}" class="btn btn-warning"><i
-                                                        class="fas fa-edit"></i></a>
-                                                <form action="{{ route('users.destroy', $user) }}" method="POST"
-                                                    class="d-inline">
-                                                    @csrf
+                                            <td class="text-center">{{ $no }}</td>
+                                            <td>{{ $item['namabarang'] }}</td>
+                                            <td>{{ $item['kebutuhan'] }}</td>
+                                            <td>{{ $item['done'] }}</td>
+                                            <td>{{ $item['todo'] }}</td>
+                                            <td>{{ $item['created_at'] }}</td>
+                                            <td class="text-center" style="white-space: nowrap;">
+                                                <a href="{{ route('PesananCustomer.edit', $item->id) }}"
+                                                    class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                                <form action="{{ route('PesananCustomer.destroy', $item->id) }}"
+                                                    method="POST" class="d-inline">
                                                     @method('delete')
+                                                    @csrf
                                                     <button type="submit"
-                                                        onclick="return confirm('Anda yakin ingin menghapus user ini ?')"
+                                                        onclick="return confirm('Anda yakin ingin menghapus data ini ?')"
                                                         class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
+                                        @php $no++; @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -65,7 +76,6 @@
         </section>
     </div>
 @endsection
-
 @push('after-style')
     <style>
         #table-1 {
@@ -89,10 +99,9 @@
     <!-- Page Specific JS File -->
     <script>
         $("#table-1").DataTable({
-            "scrollX": true,
             "columnDefs": [{
                 "sortable": false,
-                "targets": [2, 5]
+                "targets": [6]
             }]
         });
     </script>

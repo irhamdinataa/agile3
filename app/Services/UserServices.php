@@ -12,9 +12,10 @@ class UserServices
     {
         $data = $request->validated();
         $data['id'] = \Uuid::generate(4);
+        $data['foto_profile'] = $request->foto_profile->store('foto_profile', 'public');
         $data['password'] = bcrypt($data['password']);
-        $data['role'] = 'user';
         User::create($data);
+
 
         return true;
     }
@@ -26,9 +27,7 @@ class UserServices
             Storage::delete('public/' . $user->foto_profile);
             $data['foto_profile'] = $request->foto_profile->store('foto_profile', 'public');
         }
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
+
         $user->update($data);
 
         return true;

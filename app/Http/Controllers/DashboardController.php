@@ -3,32 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Klasifikasi;
-use App\Models\Laporan;
-use App\Models\User;
+use App\Models\PesananCustomer;
+use App\Models\PengadaanBarang;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $laporandiverifikasi = Laporan::query()
-        ->where('verifikasi', true)
-
-            ->count();
-
-            $laporanbelum = Laporan::query()
-            ->where('verifikasi', false)
-
-            ->count();
-
-        $user = User::query()
-            ->where('role', 'user')
-            ->count();
+        $pesanancustomerselesai = PesananCustomer::query()
+        ->whereColumn('kebutuhan', 'done')->count();
+        $pesanancustomerbelumselesai = PesananCustomer::query()
+        ->whereColumn('kebutuhan','!=', 'done')->count();
+        $pengadaanbarangbelumselesai = PengadaanBarang::query()
+        ->where('status','!=', 'done')->count();
+        $pengadaanbarangselesai = PengadaanBarang::query()
+        ->where('status', 'done')->count();
         return view('dashboard.index', [
             'title' => 'Dashboard',
-            'laporandiverifikasi' => $laporandiverifikasi,
-            'laporanbelum' => $laporanbelum,
-            'user' => $user,
+            'pesanancustomerselesai' => $pesanancustomerselesai,
+            'pesanancustomerbelumselesai' => $pesanancustomerbelumselesai,
+            'pengadaanbarangbelumselesai' => $pengadaanbarangbelumselesai,
+            'pengadaanbarangselesai' => $pengadaanbarangselesai
         ]);
     }
 }

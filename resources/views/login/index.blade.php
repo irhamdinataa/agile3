@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport" />
-    <title>Login | E-Arsip</title>
+    <title>Login | PackingApp</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/modules/bootstrap/css/bootstrap.min.css') }}" />
@@ -85,13 +85,6 @@
                                             tabindex="4">Login</button>
                                     </div>
                                 </form>
-                                <div class="text-center mt-4 mb-3">
-                                    <div class="text-job text-muted">
-                                        <a href="{{ url('/register') }}" class="text-small"
-                                            style="text-decoration: none;">Buat Akun
-                                        </a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

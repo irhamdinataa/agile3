@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.main')
-@section('title', 'Edit Profile | E-Arsip')
+@section('title', 'Edit Profile | PackingApp')
 @section('container')
     <div class="main-content">
         <section class="section">
@@ -54,6 +54,21 @@
                                 <input type="name" class="form-control @error('name') is-invalid @enderror"
                                     id="name" name="name" value="{{ old('name', $user->name) }}" required>
                                 @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Tipe Karyawan</label>
+                                <select name="role" id="role"
+                                    class="form-control @error('role') is-invalid @enderror">
+                                    <option hidden selected disabled value>Pilih Tipe karyawan</option>
+                                    <option value="pengadaan" @selected($user->role == 'pengadaan')>Pengadaan</option>
+                                    <option value="produksi" @selected($user->role == 'produksi')>Produksi</option>
+
+                                </select>
+                                @error('role')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

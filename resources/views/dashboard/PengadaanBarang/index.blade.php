@@ -17,9 +17,12 @@
                     <div class="card-header">
                         <h4>Tabel Pengadaan Barang</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('PengadaanBarang.create') }}" class="btn btn-primary">Request Pengadaan</a>
+                            @if (auth()->user()->role == 'admin' || auth()->user()->role == 'produksi')
+                                <a href="{{ route('PengadaanBarang.create') }}" class="btn btn-primary">Request
+                                    Pengadaan</a>
+                            @endif
                             @if (hasPermissionMenu(['admin']))
-                            <a href="{{ route('PengadaanBarang.download') }}" class="btn btn-primary">Export PDF</a>
+                                <a href="{{ route('PengadaanBarang.download') }}" class="btn btn-primary">Export PDF</a>
                             @endif
                         </div>
                     </div>

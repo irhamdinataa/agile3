@@ -30,12 +30,6 @@ class PesananCustomerController extends Controller
         return view('dashboard.PesananCustomer.create');
     }
 
-    public function verifikasi_index()
-    {
-        $PesananCustomer = PesananCustomer::query()->with('users')->where('verifikasi', false)->get();
-        return view('dashboard.PesananCustomer.verifikasi_index', compact('PesananCustomer'));
-    }
-
     /**
      * Store a newly created resource in storage.
      */
